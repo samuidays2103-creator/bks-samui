@@ -921,15 +921,28 @@ h4 { font-size: 1.125rem; }
   object-fit: cover;
 }
 
-.team-member__name {
+.team-member__fullname {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.team-member__name {
+  font-size: 0.88rem;
+  font-weight: 500;
   margin-bottom: 4px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a.team-member__name:hover {
+  text-decoration: underline;
 }
 
 .team-member__role {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--color-text-light);
+  line-height: 1.4;
 }
 
 /* --- Map --- */
