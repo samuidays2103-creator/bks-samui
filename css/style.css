@@ -285,19 +285,22 @@ h4 { font-size: 1.125rem; }
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile Nav */
+/* Mobile Nav — header expands to full screen */
+.header--menu-open {
+  height: 100vh;
+  height: 100dvh;
+}
+
 .nav--open {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: var(--header-height);
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(250, 252, 252, 0.98);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding-top: calc(var(--header-height) + 32px);
+  padding-top: 32px;
   align-items: center;
   gap: 16px;
   z-index: 105;

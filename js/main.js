@@ -26,10 +26,12 @@ function initMobileNav() {
   const nav = document.querySelector('.nav');
   if (!hamburger || !nav) return;
 
+  const header = hamburger.closest('.header');
   hamburger.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('nav--open');
     hamburger.classList.toggle('hamburger--open');
     hamburger.setAttribute('aria-expanded', isOpen);
+    header.classList.toggle('header--menu-open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
@@ -38,6 +40,7 @@ function initMobileNav() {
       nav.classList.remove('nav--open');
       hamburger.classList.remove('hamburger--open');
       hamburger.setAttribute('aria-expanded', 'false');
+      header.classList.remove('header--menu-open');
       document.body.style.overflow = '';
     });
   });
