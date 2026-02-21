@@ -67,8 +67,8 @@ function setLanguage(lang) {
     el.textContent = el.dataset[lang];
   });
 
-  // Show/hide language-specific blocks
-  document.querySelectorAll('[data-lang]').forEach(el => {
+  // Show/hide language-specific blocks (exclude lang switch buttons)
+  document.querySelectorAll('[data-lang]:not(.lang-btn)').forEach(el => {
     el.style.display = el.dataset.lang === lang ? '' : 'none';
   });
 
