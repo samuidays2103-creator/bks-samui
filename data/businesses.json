@@ -410,16 +410,17 @@
       "isMember": false
     },
     {
-      "id": "lemonsandn",
-      "username": "lemonsandn",
-      "name": "ДЕТСКИЙ САД | ШКОЛА | ЛАГЕРЬ |\nСАМУИ",
-      "nameRu": "ДЕТСКИЙ САД | ШКОЛА | ЛАГЕРЬ |\nСАМУИ",
+      "id": "easydays_samui",
+      "username": "easydays_samui",
+      "name": "Easydays — Kids Club & School",
+      "nameRu": "Easydays — Детский сад и школа на Самуи",
       "category": "education",
-      "description": "Lemon School & Nursery | Самуи •Детский сад Школа по программе \"Школы России\" •Аттестация •Углублённый английский Бесплатный пробный день ⬇️",
-      "descriptionRu": "Lemon School & Nursery | Самуи •Детский сад Школа по программе \"Школы России\" •Аттестация •Углублённый английский Бесплатный пробный день ⬇️",
-      "instagram": "https://www.instagram.com/lemonsandn/",
-      "followers": 126,
-      "isMember": false
+      "description": "Happy childhood in a cozy space. School & kindergarten. Raising kids since 2013.",
+      "descriptionRu": "Счастливое детство в уютном пространстве. Школа и детский сад. Воспитываем детей с 2013 года.",
+      "instagram": "https://www.instagram.com/easydays_samui/",
+      "avatar": "images/avatars/easydays_samui.png",
+      "followers": 1211,
+      "isMember": true
     },
     {
       "id": "samui.carrental",

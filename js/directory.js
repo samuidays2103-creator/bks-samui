@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadDirectory() {
   try {
-    const response = await fetch('data/businesses.json');
+    const response = await fetch('data/businesses.json?v=' + Date.now());
     const data = await response.json();
     currentBusinesses = data.businesses;
     renderBusinessCards(currentBusinesses, 'all');
@@ -76,7 +76,10 @@ function renderBusinessCards(businesses, filter) {
       <div class="biz-card" data-category="${b.category}">
         ${memberBadge}
         <div class="biz-card__header">
-          <div class="biz-card__avatar biz-card__avatar--placeholder">${initial}</div>
+          ${b.avatar
+            ? `<img class="biz-card__avatar" src="${b.avatar}" alt="${name}" loading="lazy">`
+            : `<div class="biz-card__avatar biz-card__avatar--placeholder">${initial}</div>`
+          }
           <div>
             <h3 class="biz-card__name">${name}</h3>
             <span class="biz-card__category">${catLabel}</span>

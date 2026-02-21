@@ -339,7 +339,7 @@ h4 { font-size: 1.125rem; }
   min-height: 85vh;
   padding-top: var(--header-height);
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -1130,4 +1130,35 @@ a.team-member__name:hover {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* --- Lightbox --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  cursor: zoom-out;
+}
+
+.lightbox--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.gallery img {
+  cursor: zoom-in;
 }

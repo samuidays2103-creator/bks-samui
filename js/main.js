@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initLangSwitch();
   initScrollAnimations();
+  initLightbox();
 });
 
 /* --- Sticky Header --- */
@@ -83,6 +84,37 @@ function setLanguage(lang) {
 
 function getCurrentLang() {
   return localStorage.getItem('bks-lang') || 'ru';
+}
+
+/* --- Lightbox --- */
+function initLightbox() {
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox';
+  overlay.innerHTML = '<img class="lightbox__img" src="" alt="">';
+  document.body.appendChild(overlay);
+
+  const img = overlay.querySelector('.lightbox__img');
+
+  document.addEventListener('click', (e) => {
+    if (e.target.matches('.gallery img, [data-lightbox] img')) {
+      img.src = e.target.src;
+      img.alt = e.target.alt;
+      overlay.classList.add('lightbox--open');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  overlay.addEventListener('click', () => {
+    overlay.classList.remove('lightbox--open');
+    document.body.style.overflow = '';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('lightbox--open')) {
+      overlay.classList.remove('lightbox--open');
+      document.body.style.overflow = '';
+    }
+  });
 }
 
 /* --- Scroll Animations --- */
