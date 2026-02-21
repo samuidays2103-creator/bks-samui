@@ -1119,6 +1119,124 @@ a.team-member__name:hover {
   .hero__title { font-size: 3.75rem; }
 }
 
+/* --- Investments Page --- */
+.invest-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.invest-stat {
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.invest-stat__number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.invest-stat__label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.invest-highlight {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+}
+
+.invest-highlight h2 {
+  color: white;
+}
+
+.invest-terms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.invest-term {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.invest-term__number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.invest-term__label {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.invest-villas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.invest-villa-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.invest-villa-card h3 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.invest-villa-card__specs {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.invest-spec {
+  text-align: center;
+}
+
+.invest-spec__value {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.invest-spec__label {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  .invest-stats { grid-template-columns: repeat(2, 1fr); }
+  .invest-terms { grid-template-columns: 1fr; }
+  .invest-villas { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .invest-stat__number { font-size: 1.75rem; }
+  .invest-highlight { padding: 2rem 1.5rem; }
+}
+
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
