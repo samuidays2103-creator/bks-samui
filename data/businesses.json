@@ -1,0 +1,149 @@
+{
+  "lastUpdated": "2026-02-21",
+  "businesses": [
+    {
+      "id": "decos_thai",
+      "username": "decos_thai",
+      "name": "Thai Goods Delivery",
+      "nameRu": "Товары из Таиланда",
+      "category": "services",
+      "description": "Thai cosmetics, supplements, and household goods. Delivery worldwide.",
+      "descriptionRu": "Тайская косметика, БАДы и товары для дома. Доставка по всему миру.",
+      "instagram": "https://www.instagram.com/decos_thai/",
+      "followers": 61346,
+      "isMember": false
+    },
+    {
+      "id": "yumbaker",
+      "username": "yumbaker",
+      "name": "Yum Baker",
+      "nameRu": "Yum Baker — Больше чем кондитерская",
+      "category": "food",
+      "description": "Premium bakery and confectionery on Koh Samui. Cakes, pastries, and desserts.",
+      "descriptionRu": "Премиум кондитерская на Ко Самуи. Торты, выпечка и десерты.",
+      "instagram": "https://www.instagram.com/yumbaker/",
+      "followers": 62277,
+      "isMember": false
+    },
+    {
+      "id": "bestphoto_phuket",
+      "username": "bestphoto_phuket",
+      "name": "Best Photo",
+      "nameRu": "Фотограф",
+      "category": "photo",
+      "description": "Professional photographer. Weddings, portraits, commercial shoots in Thailand.",
+      "descriptionRu": "Профессиональный фотограф. Свадьбы, портреты, коммерческие съёмки в Таиланде.",
+      "instagram": "https://www.instagram.com/bestphoto_phuket/",
+      "followers": 54647,
+      "isMember": false
+    },
+    {
+      "id": "nady_blond",
+      "username": "nady_blond",
+      "name": "Nady Mikhalevski",
+      "nameRu": "Нади Михалевски — Фитнес-тренер",
+      "category": "fitness",
+      "description": "Personal fitness trainer on Koh Samui. Workouts, nutrition, lifestyle coaching.",
+      "descriptionRu": "Персональный фитнес-тренер на Ко Самуи. Тренировки, питание, коучинг.",
+      "instagram": "https://www.instagram.com/nady_blond/",
+      "followers": 44151,
+      "isMember": false
+    },
+    {
+      "id": "samui_realestate",
+      "username": "example_realestate",
+      "name": "Samui Property",
+      "nameRu": "Недвижимость Самуи",
+      "category": "realestate",
+      "description": "Villas and apartments for sale and rent on Koh Samui. Investment consulting.",
+      "descriptionRu": "Виллы и апартаменты для продажи и аренды на Ко Самуи. Инвестиционный консалтинг.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_beauty",
+      "username": "example_beauty",
+      "name": "Beauty Studio",
+      "nameRu": "Студия красоты",
+      "category": "beauty",
+      "description": "Beauty salon and spa on Koh Samui. Hair, nails, massages, skincare.",
+      "descriptionRu": "Салон красоты и спа на Ко Самуи. Волосы, ногти, массаж, уход за кожей.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_legal",
+      "username": "example_legal",
+      "name": "Legal Services",
+      "nameRu": "Юридические услуги",
+      "category": "legal",
+      "description": "Legal consulting for expats in Thailand. Visas, company registration, property law.",
+      "descriptionRu": "Юридический консалтинг для экспатов в Таиланде. Визы, регистрация компаний, право собственности.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_transport",
+      "username": "example_transport",
+      "name": "Samui Transfer",
+      "nameRu": "Трансфер по Самуи",
+      "category": "transport",
+      "description": "Airport transfers, island tours, scooter and car rentals on Koh Samui.",
+      "descriptionRu": "Трансфер из аэропорта, экскурсии по острову, аренда скутеров и авто на Ко Самуи.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_education",
+      "username": "example_education",
+      "name": "Education Center",
+      "nameRu": "Образовательный центр",
+      "category": "education",
+      "description": "Language school and tutoring on Koh Samui. Thai, English, Russian programs.",
+      "descriptionRu": "Языковая школа и репетиторство на Ко Самуи. Тайский, английский, русский.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_medical",
+      "username": "example_medical",
+      "name": "Medical Clinic",
+      "nameRu": "Медицинская клиника",
+      "category": "medical",
+      "description": "Medical clinic with Russian-speaking staff on Koh Samui. General practice and dental.",
+      "descriptionRu": "Медицинская клиника с русскоязычным персоналом на Ко Самуи. Терапия и стоматология.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_events",
+      "username": "example_events",
+      "name": "Event Planning",
+      "nameRu": "Организация мероприятий",
+      "category": "events",
+      "description": "Event planning and coordination on Koh Samui. Weddings, corporate events, parties.",
+      "descriptionRu": "Организация мероприятий на Ко Самуи. Свадьбы, корпоративы, вечеринки.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "samui_hotel",
+      "username": "example_hotel",
+      "name": "Boutique Resort",
+      "nameRu": "Бутик-отель",
+      "category": "hotels",
+      "description": "Cozy boutique resort on Koh Samui. Beach location, pool villas, family-friendly.",
+      "descriptionRu": "Уютный бутик-отель на Ко Самуи. У пляжа, виллы с бассейном, для семей.",
+      "instagram": "",
+      "followers": 0,
+      "isMember": true
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог бизнесов — БКС</title>
+  <meta name="description" content="BKS Business Directory — find trusted Russian-speaking businesses on Koh Samui. Real estate, restaurants, beauty, fitness, and more.">
+  <meta property="og:title" content="Каталог бизнесов — БКС">
+  <meta property="og:description" content="Каталог проверенных русскоязычных бизнесов на Ко Самуи.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://samuidays2103-creator.github.io/bks-samui/directory.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link" data-en="Skip to content" data-ru="К содержанию">К содержанию</a>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <span class="logo-mark" data-en="BKS" data-ru="БКС">БКС</span>
+        <span class="logo-text" data-en="Business Club Samui" data-ru="Бизнес-Клуб Самуи">Бизнес-Клуб Самуи</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="index.html" class="nav__link" data-en="Home" data-ru="Главная">Главная</a>
+        <a href="directory.html" class="nav__link nav__link--active" data-en="Directory" data-ru="Каталог">Каталог</a>
+        <a href="events.html" class="nav__link" data-en="Events" data-ru="Мероприятия">Мероприятия</a>
+        <a href="about.html" class="nav__link" data-en="About" data-ru="О клубе">О клубе</a>
+        <a href="contacts.html" class="nav__link" data-en="Contacts" data-ru="Контакты">Контакты</a>
+        <div class="lang-switch">
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </nav>
+      <button class="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero hero--short" style="background-color: var(--color-bg-dark);">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title" data-en="Business Directory" data-ru="Каталог бизнесов">Каталог бизнесов</h1>
+      <p class="hero__subtitle" data-en="Find trusted businesses on Koh Samui" data-ru="Найдите проверенные бизнесы на Ко Самуи">Найдите проверенные бизнесы на Ко Самуи</p>
+    </div>
+  </section>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <!-- Filter Bar -->
+        <div class="filter-bar fade-in">
+          <button class="filter-btn filter-btn--active" data-category="all" data-en="All" data-ru="Все">Все</button>
+          <button class="filter-btn" data-category="realestate" data-en="Real Estate" data-ru="Недвижимость">Недвижимость</button>
+          <button class="filter-btn" data-category="food" data-en="Restaurants" data-ru="Рестораны">Рестораны</button>
+          <button class="filter-btn" data-category="beauty" data-en="Beauty" data-ru="Красота">Красота</button>
+          <button class="filter-btn" data-category="fitness" data-en="Fitness" data-ru="Фитнес">Фитнес</button>
+          <button class="filter-btn" data-category="hotels" data-en="Hotels" data-ru="Отели">Отели</button>
+          <button class="filter-btn" data-category="photo" data-en="Photo" data-ru="Фото">Фото</button>
+          <button class="filter-btn" data-category="education" data-en="Education" data-ru="Образование">Образование</button>
+          <button class="filter-btn" data-category="legal" data-en="Legal" data-ru="Юридические">Юридические</button>
+          <button class="filter-btn" data-category="transport" data-en="Transport" data-ru="Транспорт">Транспорт</button>
+          <button class="filter-btn" data-category="events" data-en="Events" data-ru="Мероприятия">Мероприятия</button>
+          <button class="filter-btn" data-category="medical" data-en="Medical" data-ru="Медицина">Медицина</button>
+          <button class="filter-btn" data-category="services" data-en="Other" data-ru="Другое">Другое</button>
+        </div>
+
+        <!-- Business Cards Grid -->
+        <div class="cards-grid" id="directory-grid">
+          <!-- Rendered by directory.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+          <div class="empty-state__icon">🔍</div>
+          <p class="empty-state__text" data-en="No businesses found in this category yet" data-ru="В этой категории пока нет бизнесов">В этой категории пока нет бизнесов</p>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align: center; margin-top: 56px;" class="fade-in">
+          <p style="color: var(--color-text-light); margin-bottom: 16px;" data-en="Want to add your business to the directory?" data-ru="Хотите добавить свой бизнес в каталог?">Хотите добавить свой бизнес в каталог?</p>
+          <a href="https://t.me/samuibiz" target="_blank" class="btn btn--telegram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+            <span data-en="Contact us in Telegram" data-ru="Напишите нам в Telegram">Напишите нам в Telegram</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <h4 class="footer__heading" data-en="BKS" data-ru="БКС">БКС</h4>
+          <p style="font-size: 0.88rem; line-height: 1.6;" data-en="Business Club Samui — community of Russian-speaking entrepreneurs on Koh Samui, Thailand." data-ru="Бизнес-Клуб Самуи — сообщество русскоязычных предпринимателей на Ко Самуи, Таиланд.">Бизнес-Клуб Самуи — сообщество русскоязычных предпринимателей на Ко Самуи, Таиланд.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading" data-en="Pages" data-ru="Разделы">Разделы</h4>
+          <div class="footer__links">
+            <a href="directory.html" class="footer__link" data-en="Business Directory" data-ru="Каталог бизнесов">Каталог бизнесов</a>
+            <a href="events.html" class="footer__link" data-en="Events" data-ru="Мероприятия">Мероприятия</a>
+            <a href="about.html" class="footer__link" data-en="About the Club" data-ru="О клубе">О клубе</a>
+            <a href="contacts.html" class="footer__link" data-en="Contacts" data-ru="Контакты">Контакты</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading" data-en="Weekly Meeting" data-ru="Еженедельная встреча">Еженедельная встреча</h4>
+          <div class="footer__links">
+            <span class="footer__link" data-en="Business Wednesday" data-ru="Бизнес-среда">Бизнес-среда</span>
+            <span class="footer__link" data-en="Every Wed, 10:00" data-ru="Каждую среду, 10:00">Каждую среду, 10:00</span>
+            <span class="footer__link" data-en="Cafe Plankton" data-ru="Кафе Планктон">Кафе Планктон</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading" data-en="Connect" data-ru="Связь">Связь</h4>
+          <div class="footer__social">
+            <a href="https://t.me/samuibiz" target="_blank" class="footer__social-link" aria-label="Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2026 БКС — Бизнес-Клуб Самуи</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/directory.js"></script>
+</body>
+</html>
