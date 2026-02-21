@@ -285,25 +285,26 @@ h4 { font-size: 1.125rem; }
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile Nav — header expands to full screen */
+/* Mobile Nav — header becomes full-screen overlay */
 .header--menu-open {
   height: 100vh;
   height: 100dvh;
+  background: var(--color-bg);
+}
+
+.header--menu-open .header__inner {
+  flex-wrap: wrap;
+  align-content: flex-start;
+  height: auto;
 }
 
 .nav--open {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: var(--header-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(250, 252, 252, 0.98);
-  padding-top: 32px;
   align-items: center;
   gap: 16px;
-  z-index: 105;
+  width: 100%;
+  padding: 32px 0;
 }
 
 .nav--open .nav__link {
