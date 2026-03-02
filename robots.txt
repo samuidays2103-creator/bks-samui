@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://samuidays2103-creator.github.io/bks-samui/sitemap.xml
+Sitemap: https://samuibiz.club/sitemap.xml
