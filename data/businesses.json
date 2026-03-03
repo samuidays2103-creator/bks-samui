@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-02",
+  "lastUpdated": "2026-03-03",
   "businesses": [
     {
       "id": "easydays_samui",
@@ -12,6 +12,32 @@
       "instagram": "https://www.instagram.com/easydays_samui/",
       "avatar": "images/avatars/easydays_samui.png",
       "followers": 1211,
+      "isMember": true
+    },
+    {
+      "id": "bizinthailand",
+      "username": "bizinthailand",
+      "name": "Ready-made Business | Thailand | Kestas",
+      "nameRu": "Готовый бизнес | Таиланд | Кестас",
+      "category": "services",
+      "description": "Everything about business in Thailand. Verified offers and information.",
+      "descriptionRu": "Все о бизнесе в Таиланде. Проверенные предложения и информация.",
+      "telegram": "https://t.me/bizinthailand",
+      "avatar": "images/avatars/bizinthailand.jpg",
+      "followers": 1133,
+      "isMember": true
+    },
+    {
+      "id": "lacostabianca_samui",
+      "username": "lacostabianca_samui",
+      "name": "La Costa Bianca — Coliving | Coworking | Community",
+      "nameRu": "La Costa Bianca — Коливинг | Коворкинг | Комьюнити",
+      "category": "realestate",
+      "description": "Coliving, coworking and community space on Koh Samui.",
+      "descriptionRu": "Коливинг, коворкинг и комьюнити-пространство на Самуи.",
+      "instagram": "https://www.instagram.com/lacostabianca_samui/",
+      "avatar": "images/avatars/lacostabianca_samui.jpg",
+      "followers": 0,
       "isMember": true
     }
   ]
