@@ -460,11 +460,10 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
         score_str, result["total"], result["age_days"], decision.upper(),
     )
 
-    # Аккаунт 0 дней — автоотклонение даже в тестовом режиме
+    # Аккаунт 0 дней — тихое автоотклонение
     if result["age_days"] < 1 and decision == "decline":
         await req.decline()
         logger.info("  AUTO-DECLINE: аккаунт 0 дней — отклонён автоматически")
-        await notify_admin(context, user, result)
         return
 
     if TEST_MODE:
