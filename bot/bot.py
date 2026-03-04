@@ -1189,16 +1189,18 @@ def main():
         )
 
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", cmd_start))
-    app.add_handler(CommandHandler("check", cmd_check))
-    app.add_handler(CommandHandler("scan", cmd_scan))
-    app.add_handler(CommandHandler("purge", cmd_purge))
-    app.add_handler(CommandHandler("cleanup", cmd_cleanup))
-    app.add_handler(CommandHandler("status", cmd_status))
+    # Команды и пересылка — только в личке с ботом
+    pm = filters.ChatType.PRIVATE
+    app.add_handler(CommandHandler("start", cmd_start, filters=pm))
+    app.add_handler(CommandHandler("check", cmd_check, filters=pm))
+    app.add_handler(CommandHandler("scan", cmd_scan, filters=pm))
+    app.add_handler(CommandHandler("purge", cmd_purge, filters=pm))
+    app.add_handler(CommandHandler("cleanup", cmd_cleanup, filters=pm))
+    app.add_handler(CommandHandler("status", cmd_status, filters=pm))
     app.add_handler(MessageHandler(
         filters.StatusUpdate.NEW_CHAT_MEMBERS, handle_new_member,
     ))
-    app.add_handler(MessageHandler(filters.FORWARDED, handle_forwarded))
+    app.add_handler(MessageHandler(pm & filters.FORWARDED, handle_forwarded))
     app.add_handler(CallbackQueryHandler(handle_callback))
     app.add_handler(ChatJoinRequestHandler(callback=handle_join_request))
 
