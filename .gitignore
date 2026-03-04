@@ -1,0 +1,10 @@
+node_modules/
+bot/.env
+bot/*.session
+bot/bot.log
+bot/scan_result.txt
+bot/score_kicked.py
+bot/scan_once.py
+.claude/
+temp_files/
+log/
