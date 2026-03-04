@@ -18,6 +18,7 @@ from telegram.ext import (
     ApplicationBuilder,
     CallbackQueryHandler,
     ChatJoinRequestHandler,
+    ChatMemberHandler,
     CommandHandler,
     ContextTypes,
     MessageHandler,
@@ -483,26 +484,35 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 # ── Автобан новых участников (группы без заявок) ──────────────
 
-async def handle_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def handle_chat_member_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
-    Обработка new_chat_members — в группах из AUTOBAN_CHATS
-    автоматически проверяет и банит подозрительных.
+    Обработка chat_member updates — надёжный способ отлавливать
+    новых участников в супергруппах (AUTOBAN_CHATS).
+    Срабатывает когда статус пользователя меняется на member.
     """
     chat = update.effective_chat
-    if not update.message or not update.message.new_chat_members:
+    member_update = update.chat_member
+    if not member_update:
         return
 
-    # Логируем chat_id (полезно для приватных групп без username)
+    # Только если пользователь СТАЛ участником (was not member -> became member)
+    old_status = member_update.old_chat_member.status
+    new_status = member_update.new_chat_member.status
+    if new_status not in ("member", "restricted") or old_status in ("member", "administrator", "creator", "restricted"):
+        return
+
     chat_str = str(chat.id)
     chat_uname = f"@{chat.username}" if chat.username else ""
     chat_label = chat_uname or chat.title or chat_str
-    logger.info("NEW_MEMBER event: chat=%s (id=%s)", chat_label, chat_str)
+    user = member_update.new_chat_member.user
+    logger.info("CHAT_MEMBER_UPDATE: %s вступил в %s (id=%s)", user.full_name, chat_label, chat_str)
 
     # Проверяем, включена ли группа в автобан
     if chat_str not in AUTOBAN_CHATS and chat_uname not in AUTOBAN_CHATS:
         return
 
-    for user in update.message.new_chat_members:
+    users_to_check = [user]
+    for user in users_to_check:
         if user.is_bot:
             continue
         if user.id in WHITELIST_IDS:
@@ -1196,8 +1206,8 @@ def main():
     app.add_handler(CommandHandler("purge", cmd_purge, filters=pm))
     app.add_handler(CommandHandler("cleanup", cmd_cleanup, filters=pm))
     app.add_handler(CommandHandler("status", cmd_status, filters=pm))
-    app.add_handler(MessageHandler(
-        filters.StatusUpdate.NEW_CHAT_MEMBERS, handle_new_member,
+    app.add_handler(ChatMemberHandler(
+        handle_chat_member_update, ChatMemberHandler.CHAT_MEMBER,
     ))
     app.add_handler(MessageHandler(pm & filters.FORWARDED, handle_forwarded))
     app.add_handler(CallbackQueryHandler(handle_callback))
@@ -1212,7 +1222,10 @@ def main():
     mode = "ТЕСТОВЫЙ (без реальных отклонений)" if TEST_MODE else "БОЕВОЙ"
     logger.info("Бот запущен в режиме: %s", mode)
     logger.info("Пороги: approve >= %d, decline < %d", SCORE_APPROVE, SCORE_DECLINE)
-    app.run_polling(drop_pending_updates=False)
+    app.run_polling(
+        drop_pending_updates=False,
+        allowed_updates=["message", "callback_query", "chat_join_request", "chat_member"],
+    )
 
 
 if __name__ == "__main__":
