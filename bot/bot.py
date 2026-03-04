@@ -50,6 +50,16 @@ AUTOBAN_CHATS: set[str] = set(
     filter(None, os.getenv("AUTOBAN_CHATS", "").split(","))
 )
 
+# Ключевые слова для мониторинга (реклама конкурентов и т.п.)
+# Слова в нижнем регистре, ищем в тексте сообщения
+WATCH_KEYWORDS = [
+    "starkids", "star kids",
+    "lulu", "claudville",
+]
+_wk_raw = os.getenv("WATCH_KEYWORDS", "")
+if _wk_raw:
+    WATCH_KEYWORDS.extend(k.strip().lower() for k in _wk_raw.split(",") if k.strip())
+
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     level=getattr(logging, LOG_LEVEL, logging.INFO),
@@ -580,6 +590,46 @@ async def handle_chat_member_update(update: Update, context: ContextTypes.DEFAUL
                     )
                 except Exception as e:
                     logger.error("AUTOBAN: не удалось уведомить: %s", e)
+
+
+async def handle_watched_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Мониторинг сообщений в AUTOBAN_CHATS на ключевые слова
+    (реклама конкурентов и т.п.). Уведомляет админа.
+    """
+    msg = update.effective_message
+    if not msg or not msg.text:
+        return
+
+    chat = update.effective_chat
+    chat_str = str(chat.id)
+    chat_uname = f"@{chat.username}" if chat.username else ""
+    if chat_str not in AUTOBAN_CHATS and chat_uname not in AUTOBAN_CHATS:
+        return
+
+    text_lower = msg.text.lower()
+    found = [kw for kw in WATCH_KEYWORDS if kw in text_lower]
+    if not found:
+        return
+
+    user = update.effective_user
+    chat_label = chat_uname or chat.title or chat_str
+    uname = f"@{user.username}" if user and user.username else "нет"
+    name = user.full_name if user else "?"
+    logger.info("WATCH [%s]: слова %s от %s (%s)", chat_label, found, name, uname)
+
+    if ADMIN_CHAT_ID:
+        text = (
+            f"👁 Мониторинг: {chat_label}\n\n"
+            f"Ключевые слова: {', '.join(found)}\n"
+            f"От: {name} ({uname})\n"
+            f"ID: {user.id if user else '?'}\n\n"
+            f"Сообщение:\n{msg.text[:500]}"
+        )
+        try:
+            await context.bot.send_message(chat_id=int(ADMIN_CHAT_ID), text=text)
+        except Exception as e:
+            logger.error("WATCH: не удалось уведомить: %s", e)
 
 
 # ── Команды для отладки ────────────────────────────────────────
@@ -1208,6 +1258,9 @@ def main():
     app.add_handler(CommandHandler("status", cmd_status, filters=pm))
     app.add_handler(ChatMemberHandler(
         handle_chat_member_update, ChatMemberHandler.CHAT_MEMBER,
+    ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & filters.ChatType.SUPERGROUP, handle_watched_message,
     ))
     app.add_handler(MessageHandler(pm & filters.FORWARDED, handle_forwarded))
     app.add_handler(CallbackQueryHandler(handle_callback))
