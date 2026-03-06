@@ -446,6 +446,12 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
         logger.info("WHITELIST: %s (ID: %d) — одобрен", user.full_name, user.id)
         return
 
+    # Удалённый аккаунт — тихое автоотклонение
+    if not user.first_name and not user.last_name and not user.username:
+        await req.decline()
+        logger.info("AUTO-DECLINE: Deleted Account id=%d — отклонён", user.id)
+        return
+
     result = await evaluate_user(user)
     result["chat_id"] = req.chat.id
     scores = result["scores"]
@@ -518,6 +524,17 @@ async def handle_chat_member_update(update: Update, context: ContextTypes.DEFAUL
         if user.id in WHITELIST_IDS:
             logger.info("AUTOBAN: %s (ID: %d) — в белом списке, пропускаю",
                         user.full_name, user.id)
+            continue
+
+        # Удалённый аккаунт — сразу кик без скоринга
+        if not user.first_name and not user.last_name and not user.username:
+            chat_label = chat_uname or chat.title or chat_str
+            logger.info("AUTOBAN [%s]: Deleted Account id=%d — кик", chat_label, user.id)
+            try:
+                await context.bot.ban_chat_member(chat_id=chat.id, user_id=user.id)
+                await context.bot.unban_chat_member(chat_id=chat.id, user_id=user.id)
+            except Exception as e:
+                logger.error("AUTOBAN: не удалось кикнуть deleted %d: %s", user.id, e)
             continue
 
         # Быстрый скоринг (возраст + имя + username + CAS)
