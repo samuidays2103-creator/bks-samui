@@ -39,6 +39,33 @@
       "avatar": "images/avatars/lacostabianca_samui.jpg",
       "followers": 0,
       "isMember": true
+    },
+    {
+      "id": "questoria",
+      "username": "questoria",
+      "name": "Questoria — New Entertainment Format",
+      "nameRu": "Квестория — новый вид досуга",
+      "category": "entertainment",
+      "description": "Story-driven detective role-playing games online and offline. Open games, birthdays, corporate events.",
+      "descriptionRu": "Сюжетно-ролевые детективные игры онлайн и оффлайн. Сборные, дни рождения, корпоративы.",
+      "website": "https://questoria.ru",
+      "avatar": "images/avatars/questoria.svg",
+      "followers": 0,
+      "isMember": true
+    },
+    {
+      "id": "akorsun",
+      "username": "akorsun",
+      "name": "Alexey Korsun — Process Optimization",
+      "nameRu": "Алексей Корсун — оптимизация процессов",
+      "category": "services",
+      "description": "Company grew but runs slow? I build processes. I accelerate projects.",
+      "descriptionRu": "Компания выросла, но работает медленно? Выстраиваю процессы. Ускоряю проекты.",
+      "website": "https://akorsun.ru",
+      "telegram": "https://t.me/akorsun",
+      "avatar": "images/avatars/akorsun.jpg",
+      "followers": 0,
+      "isMember": true
     }
   ]
 }
