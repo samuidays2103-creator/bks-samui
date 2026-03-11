@@ -1237,6 +1237,83 @@ a.team-member__name:hover {
   .invest-highlight { padding: 2rem 1.5rem; }
 }
 
+/* --- Mobile fixes: spacing & overlap --- */
+@media (max-width: 767px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.1rem; }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero__subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+
+  .hero__content {
+    padding: 24px 0;
+  }
+
+  .hero--short {
+    min-height: 32vh;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+
+  .feature-card {
+    padding: 24px;
+  }
+
+  .event-card {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .split {
+    gap: 28px;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    font-size: 0.9rem;
+  }
+
+  .cta {
+    padding: 40px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .footer {
+    padding: 40px 0 24px;
+  }
+
+  .footer__grid {
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .stat__number {
+    font-size: 2rem;
+  }
+}
+
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
