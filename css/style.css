@@ -326,6 +326,11 @@ h4 { font-size: 1.125rem; }
   color: var(--color-white);
 }
 
+.section--alt + .section--alt,
+.section--dark + .section--dark {
+  padding-top: 0;
+}
+
 .section--dark h2,
 .section--dark h3 {
   color: var(--color-white);
@@ -1312,6 +1317,20 @@ a.team-member__name:hover {
   .stat__number {
     font-size: 2rem;
   }
+}
+
+/* --- Utility classes --- */
+.text-center {
+  text-align: center;
+}
+
+/* --- FAQ --- */
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item[open] summary span:last-child {
+  transform: rotate(45deg);
 }
 
 /* --- Reduced Motion --- */
