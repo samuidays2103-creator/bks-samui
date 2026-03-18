@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,6 +52,30 @@
       {"@type": "Question", "name": "Как добавить бизнес в каталог?", "acceptedAnswer": {"@type": "Answer", "text": "Напишите администрации в Telegram-группе. Размещение в каталоге доступно активным участникам клуба."}}
     ]
   }
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="О клубе — БКС">
+  <meta name="twitter:description" content="Бизнес-Клуб Самуи: миссия, преимущества и команда.">
+  <meta name="twitter:image" content="https://samuibiz.club/images/hero-about.jpg">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "БКС",
+      "item": "https://samuibiz.club/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "О клубе",
+      "item": "https://samuibiz.club/about.html"
+    }
+  ]
+}
   </script>
 </head>
 <body>
@@ -94,11 +118,12 @@
   </section>
 
   <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><a href="index.html" data-ru="Главная" data-en="Home">Главная</a> <span class="breadcrumb__sep">/</span> <span data-ru="О клубе" data-en="About">О клубе</span></div></nav>
     <!-- Mission -->
     <section class="section">
       <div class="container">
         <div class="split fade-in">
-          <img class="split__image" src="images/meeting.jpg" alt="BKS business meeting">
+          <picture><source srcset="images/meeting.webp" type="image/webp"><img loading="lazy" class="split__image" src="images/meeting.jpg" alt="Нетворкинг-встреча Бизнес-Клуба Самуи"></picture>
           <div class="split__content">
             <h2 data-en="Our Mission" data-ru="Наша миссия">Наша миссия</h2>
             <p data-en="BKS was created to bring together Russian-speaking entrepreneurs on Koh Samui into a strong, supportive community. We believe that together we are stronger — sharing knowledge, resources, and connections helps everyone grow." data-ru="БКС создан, чтобы объединить русскоязычных предпринимателей на Ко Самуи в сильное сообщество взаимной поддержки. Мы верим, что вместе мы сильнее — обмен знаниями, ресурсами и связями помогает каждому расти.">БКС создан, чтобы объединить русскоязычных предпринимателей на Ко Самуи в сильное сообщество взаимной поддержки. Мы верим, что вместе мы сильнее — обмен знаниями, ресурсами и связями помогает каждому расти.</p>
@@ -180,31 +205,31 @@
         <p class="section-subtitle fade-in" data-en="The team behind BKS" data-ru="Команда БКС">Команда БКС</p>
         <div class="cards-grid fade-in" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
           <div class="team-member">
-            <img class="team-member__avatar" src="images/team/alexey.jpg" alt="Alexey Korsun" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;">
+            <picture><source srcset="images/team/alexey.webp" type="image/webp"><img loading="lazy" class="team-member__avatar" src="images/team/alexey.jpg" alt="Алексей — команда БКС" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;"></picture>
             <div class="team-member__fullname" data-en="Alexey Korsun" data-ru="Алексей Корсун">Алексей Корсун</div>
             <a href="https://t.me/akorsun" target="_blank" class="team-member__name">@akorsun</a>
             <div class="team-member__role" data-en="Process optimization, founder of questoria.com" data-ru="Оптимизация процессов, основатель questoria.com">Оптимизация процессов, основатель questoria.com</div>
           </div>
           <div class="team-member">
-            <img class="team-member__avatar" src="images/team/kestas.jpg" alt="Kestas" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;">
+            <picture><source srcset="images/team/kestas.webp" type="image/webp"><img loading="lazy" class="team-member__avatar" src="images/team/kestas.jpg" alt="Кестас — команда БКС" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;"></picture>
             <div class="team-member__fullname" data-en="Kestas" data-ru="Кестас">Кестас</div>
             <a href="https://t.me/k_pru" target="_blank" class="team-member__name">@k_pru</a>
             <div class="team-member__role" data-en="Entrepreneur in Russia and Thailand" data-ru="Предприниматель в России и Таиланде">Предприниматель в России и Таиланде</div>
           </div>
           <div class="team-member">
-            <img class="team-member__avatar" src="images/team/natali.jpg" alt="Natali" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;">
+            <picture><source srcset="images/team/natali.webp" type="image/webp"><img loading="lazy" class="team-member__avatar" src="images/team/natali.jpg" alt="Натали — команда БКС" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;"></picture>
             <div class="team-member__fullname" data-en="Natali" data-ru="Натали">Натали</div>
             <a href="https://t.me/Natali_na_Samui" target="_blank" class="team-member__name">@Natali_na_Samui</a>
             <div class="team-member__role" data-en="Community, projects & events" data-ru="Комьюнити, проекты и мероприятия">Комьюнити, проекты и мероприятия</div>
           </div>
           <div class="team-member">
-            <img class="team-member__avatar" src="images/team/sergey.jpg" alt="Sergey Luponosov" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;">
+            <picture><source srcset="images/team/sergey.webp" type="image/webp"><img loading="lazy" class="team-member__avatar" src="images/team/sergey.jpg" alt="Сергей — команда БКС" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;"></picture>
             <div class="team-member__fullname" data-en="Sergey Luponosov" data-ru="Сергей Лупоносов">Сергей Лупоносов</div>
             <a href="https://t.me/Sergey_samui" target="_blank" class="team-member__name">@Sergey_samui</a>
             <div class="team-member__role" data-en="Real estate agency owner on Samui" data-ru="Владелец агентства недвижимости на Самуи">Владелец агентства недвижимости на Самуи</div>
           </div>
           <div class="team-member">
-            <img class="team-member__avatar" src="images/team/andrey.jpg" alt="Andrey Dmitriev" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;">
+            <picture><source srcset="images/team/andrey.webp" type="image/webp"><img loading="lazy" class="team-member__avatar" src="images/team/andrey.jpg" alt="Андрей — команда БКС" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block;"></picture>
             <div class="team-member__fullname" data-en="Andrey Dmitriev" data-ru="Андрей Дмитриев">Андрей Дмитриев</div>
             <a href="https://t.me/Samuidays" target="_blank" class="team-member__name">@Samuidays</a>
             <div class="team-member__role" data-en="Director of school and kindergarten" data-ru="Директор школы и детского сада">Директор школы и детского сада</div>
@@ -359,6 +384,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.min.js"></script>
 </body>
 </html>

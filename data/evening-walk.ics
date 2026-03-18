@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BKS//Business Club Samui//EN
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Bangkok:20260317T220000
+DURATION:PT1H30M
+RRULE:FREQ=WEEKLY;BYDAY=TU
+SUMMARY:BKS Evening Business Walk / Бизнес-прогулка
+DESCRIPTION:Evening networking walk around the lake. Business Club Samui.\nВечерняя нетворкинг-прогулка вокруг озера. БКС.
+LOCATION:Lake near basketball court, Koh Samui, Thailand
+URL:https://t.me/samuibiz
+END:VEVENT
+END:VCALENDAR

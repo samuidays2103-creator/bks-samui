@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -34,6 +34,30 @@
       }
     }
   }
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Контакты — БКС">
+  <meta name="twitter:description" content="Свяжитесь с Бизнес-Клубом Самуи. Telegram, встречи, членство.">
+  <meta name="twitter:image" content="https://samuibiz.club/images/hero-contacts.jpg">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "БКС",
+      "item": "https://samuibiz.club/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Контакты",
+      "item": "https://samuibiz.club/contacts.html"
+    }
+  ]
+}
   </script>
 </head>
 <body>
@@ -76,6 +100,7 @@
   </section>
 
   <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><a href="index.html" data-ru="Главная" data-en="Home">Главная</a> <span class="breadcrumb__sep">/</span> <span data-ru="Контакты" data-en="Contacts">Контакты</span></div></nav>
     <!-- How to Join -->
     <section class="section">
       <div class="container">
@@ -118,6 +143,13 @@
             <div>
               <div class="contact-item__label">Telegram</div>
               <div class="contact-item__value"><a href="https://t.me/samuibiz" target="_blank">@samuibiz</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item__icon">📧</div>
+            <div>
+              <div class="contact-item__label">Email</div>
+              <div class="contact-item__value"><a href="mailto:info@samuibiz.club">info@samuibiz.club</a></div>
             </div>
           </div>
           <div class="contact-item">
@@ -208,6 +240,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.min.js"></script>
 </body>
 </html>

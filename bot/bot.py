@@ -9,7 +9,9 @@ import os
 import re
 import logging
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, time, timezone
+from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import httpx
 from dotenv import load_dotenv
@@ -49,6 +51,14 @@ WHITELIST_IDS: set[int] = {
 AUTOBAN_CHATS: set[str] = set(
     filter(None, os.getenv("AUTOBAN_CHATS", "").split(","))
 )
+
+# Чат для еженедельных donation-напоминаний (по умолчанию @samuibiz)
+DONATION_CHAT = os.getenv("DONATION_CHAT", "@samuibiz")
+
+# Путь к QR-коду для donation
+QR_DONATION_PATH = Path(__file__).parent / "qr_donation.jpg"
+
+BANGKOK_TZ = ZoneInfo("Asia/Bangkok")
 
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -1017,6 +1027,141 @@ async def cmd_purge(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def cmd_audit(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    /audit [@chat] — проверить ВСЕХ участников по CAS + SpamWatch.
+    Показывает только тех, кто найден в чёрных списках.
+    """
+    if context.args:
+        target = context.args[0]
+        if not target.startswith("@") and not target.startswith("-"):
+            target = f"@{target}"
+    else:
+        target = "@samuibiz"
+    admin_chat = update.effective_chat.id
+
+    status_msg = await update.message.reply_text(
+        "🔍 Загружаю список участников для аудита..."
+    )
+
+    try:
+        members = await _fetch_all_members(target)
+    except Exception as e:
+        logger.exception("audit: ошибка загрузки участников")
+        await status_msg.edit_text(f"Ошибка загрузки: {e}")
+        return
+
+    # Получаем chat_id группы
+    try:
+        chat_arg = int(target) if target.lstrip("-").isdigit() else target
+        chat = await context.bot.get_chat(chat_arg)
+        group_chat_id = chat.id
+        chat_title = chat.title or target
+    except Exception as e:
+        await status_msg.edit_text(f"Не удалось получить chat_id: {e}")
+        return
+
+    humans = [m for m in members if not m["is_bot"]]
+    total_count = len(humans)
+    await status_msg.edit_text(
+        f"🔍 Проверяю {total_count} участников по CAS + SpamWatch...\n"
+        "Это может занять пару минут."
+    )
+
+    # Проверяем CAS и SpamWatch параллельно, батчами по 50
+    BATCH = 50
+    flagged = []
+    checked = 0
+
+    for i in range(0, len(humans), BATCH):
+        batch = humans[i:i + BATCH]
+        cas_tasks = [check_cas(m["id"]) for m in batch]
+        sw_tasks = [check_spamwatch(m["id"]) for m in batch]
+
+        cas_results = await asyncio.gather(*cas_tasks, return_exceptions=True)
+        sw_results = await asyncio.gather(*sw_tasks, return_exceptions=True)
+
+        for m, cas, sw in zip(batch, cas_results, sw_results):
+            cas_banned = cas if isinstance(cas, bool) else False
+            sw_banned = sw if isinstance(sw, bool) else False
+            if cas_banned or sw_banned:
+                flagged.append({
+                    "m": m,
+                    "cas": cas_banned,
+                    "sw": sw_banned,
+                })
+
+        checked += len(batch)
+        if checked % 200 == 0 or checked == total_count:
+            try:
+                await status_msg.edit_text(
+                    f"🔍 Проверено {checked}/{total_count}... "
+                    f"Найдено: {len(flagged)} в чёрных списках"
+                )
+            except Exception:
+                pass  # rate limit
+
+    if not flagged:
+        await status_msg.edit_text(
+            f"✅ Аудит завершён: {total_count} участников проверено.\n"
+            "Никто не найден в CAS или SpamWatch."
+        )
+        return
+
+    await status_msg.edit_text(
+        f"⚠️ Найдено {len(flagged)} участников в чёрных списках!\n"
+        "Отправляю карточки..."
+    )
+
+    for r in flagged:
+        m = r["m"]
+        name = f"{m['first_name'] or ''} {m.get('last_name') or ''}".strip() or "(пусто)"
+        uname = f"@{m['username']}" if m.get("username") else "нет"
+
+        flags = []
+        if r["cas"]:
+            flags.append("CAS: 🚨 ЗАБАНЕН")
+        if r["sw"]:
+            flags.append("SpamWatch: 🚨 ЗАБАНЕН")
+
+        age = estimate_account_age_days(m["id"])
+
+        text = (
+            f"🚨 {name} ({uname})\n"
+            f"ID: {m['id']}\n"
+            f"Возраст: ~{age} дн.\n"
+            f"{chr(10).join(flags)}"
+        )
+
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton(
+                    "🗑 Удалить",
+                    callback_data=f"ban_{m['id']}_{group_chat_id}",
+                ),
+                InlineKeyboardButton(
+                    "⏭ Пропустить",
+                    callback_data=f"skip_{m['id']}_{group_chat_id}",
+                ),
+            ]
+        ])
+
+        try:
+            await context.bot.send_message(
+                chat_id=admin_chat, text=text, reply_markup=keyboard,
+            )
+        except Exception as e:
+            logger.error("audit: не удалось отправить карточку %d: %s", m["id"], e)
+
+    await context.bot.send_message(
+        chat_id=admin_chat,
+        text=f"✅ Аудит завершён!\n"
+             f"Проверено: {total_count}\n"
+             f"В чёрных списках: {len(flagged)}\n"
+             "Нажимай кнопки для каждого.",
+    )
+
+
 async def cmd_cleanup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     /cleanup — удалить все «Deleted Account» из всех трёх групп.
@@ -1206,6 +1351,94 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.warning("КНОПКА ошибка: %s", e)
 
 
+# ── Еженедельное donation-напоминание (среда 11:30) ──────────
+
+DONATION_TEXT = (
+    "<b>Чтобы двигаться дальше, клубу нужен регулярный бюджет.</b>\n"
+    "Эти деньги пойдут на продвижение клуба: SMM, SEO, рекламу, "
+    "настройку Google / Facebook / Яндекс, а также на привлечение "
+    "спикеров и развитие соцсетей.\n\n"
+    "<b>QR-код для donation выше.</b>\n"
+    "На встречах также стоит коробка для donation.\n\n"
+    "<b>Поддержка полностью добровольная</b> — каждый участвует "
+    "по желанию и по возможности.\n\n"
+    "Спасибо всем, кто помогает клубу расти!"
+)
+
+
+async def cmd_jobs(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """/jobs — показать запланированные задачи."""
+    jq = context.application.job_queue
+    if jq is None:
+        await update.message.reply_text("JobQueue не настроен.")
+        return
+    jobs = jq.jobs()
+    if not jobs:
+        await update.message.reply_text("Нет запланированных задач.")
+        return
+    now_bkk = datetime.now(BANGKOK_TZ)
+    lines = [f"Сейчас Bangkok: {now_bkk:%Y-%m-%d %H:%M:%S} ({now_bkk:%A})"]
+    lines.append(f"donation_sent_today: {_donation_sent_today}")
+    for j in jobs:
+        lines.append(f"• {j.name}")
+    await update.message.reply_text("\n".join(lines))
+
+
+async def cmd_testdonation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """/testdonation — отправить donation-пост прямо сейчас (тест)."""
+    await send_donation_reminder(context)
+    await update.message.reply_text("✅ Donation отправлен в " + DONATION_CHAT)
+
+
+_donation_sent_today = False
+
+
+async def donation_checker(context: ContextTypes.DEFAULT_TYPE):
+    """Проверяем каждую минуту: среда + 11:30 Bangkok → отправляем."""
+    global _donation_sent_today
+    now = datetime.now(BANGKOK_TZ)
+
+    # Сброс флага в полночь
+    if now.hour == 0 and now.minute == 0:
+        _donation_sent_today = False
+        return
+
+    # Среда (weekday=2) в 11:30
+    if now.weekday() == 2 and now.hour == 11 and now.minute == 30 and not _donation_sent_today:
+        _donation_sent_today = True
+        await send_donation_reminder(context)
+
+
+async def send_donation_reminder(context: ContextTypes.DEFAULT_TYPE):
+    """Еженедельная отправка donation-напоминания в чат клуба."""
+    logger.info("DONATION: запуск отправки в %s", DONATION_CHAT)
+    chat = DONATION_CHAT
+    try:
+        chat_target = int(chat) if chat.lstrip("-").isdigit() else chat
+    except ValueError:
+        chat_target = chat
+
+    try:
+        if QR_DONATION_PATH.exists():
+            with open(QR_DONATION_PATH, "rb") as photo:
+                await context.bot.send_photo(
+                    chat_id=chat_target,
+                    photo=photo,
+                    caption=DONATION_TEXT,
+                    parse_mode="HTML",
+                )
+        else:
+            await context.bot.send_message(
+                chat_id=chat_target,
+                text=DONATION_TEXT,
+                parse_mode="HTML",
+            )
+            logger.warning("QR-код не найден: %s — отправлено без картинки", QR_DONATION_PATH)
+        logger.info("DONATION: напоминание отправлено в %s", chat)
+    except Exception as e:
+        logger.error("DONATION: ошибка отправки в %s: %s", chat, e)
+
+
 # ── Запуск ────────────────────────────────────────────────────
 
 def main():
@@ -1221,8 +1454,11 @@ def main():
     app.add_handler(CommandHandler("check", cmd_check, filters=pm))
     app.add_handler(CommandHandler("scan", cmd_scan, filters=pm))
     app.add_handler(CommandHandler("purge", cmd_purge, filters=pm))
+    app.add_handler(CommandHandler("audit", cmd_audit, filters=pm))
     app.add_handler(CommandHandler("cleanup", cmd_cleanup, filters=pm))
     app.add_handler(CommandHandler("status", cmd_status, filters=pm))
+    app.add_handler(CommandHandler("jobs", cmd_jobs, filters=pm))
+    app.add_handler(CommandHandler("testdonation", cmd_testdonation, filters=pm))
     app.add_handler(ChatMemberHandler(
         handle_chat_member_update, ChatMemberHandler.CHAT_MEMBER,
     ))
@@ -1235,6 +1471,19 @@ def main():
         logger.warning("Ошибка обработки обновления: %s", context.error)
 
     app.add_error_handler(error_handler)
+
+    # Еженедельное donation-напоминание: среда 11:30 по Бангкоку
+    job_queue = app.job_queue
+    if job_queue is not None:
+        job_queue.run_repeating(
+            donation_checker,
+            interval=60,  # каждую минуту
+            first=5,      # через 5 секунд после старта
+            name="donation_checker",
+        )
+        logger.info("DONATION: checker запущен (каждую минуту, ср 11:30 Bangkok)")
+    else:
+        logger.warning("DONATION: JobQueue недоступен — установите python-telegram-bot[job-queue]")
 
     mode = "ТЕСТОВЫЙ (без реальных отклонений)" if TEST_MODE else "БОЕВОЙ"
     logger.info("Бот запущен в режиме: %s", mode)

@@ -110,6 +110,26 @@ ul, ol {
   top: 8px;
 }
 
+/* --- Breadcrumbs --- */
+.breadcrumb {
+  padding: 12px 0;
+  font-size: 0.813rem;
+  color: var(--color-text-light);
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+.breadcrumb a {
+  color: var(--color-primary);
+  transition: color var(--transition);
+}
+.breadcrumb a:hover {
+  color: var(--color-primary-dark);
+}
+.breadcrumb__sep {
+  margin: 0 6px;
+  opacity: 0.4;
+}
+
 /* --- Container --- */
 .container {
   width: 100%;
@@ -1348,6 +1368,19 @@ a.team-member__name:hover {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* --- Event Calendar Link --- */
+.event-card__cal {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.813rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: color var(--transition);
+}
+.event-card__cal:hover {
+  color: var(--color-primary-dark);
 }
 
 /* --- Lightbox --- */

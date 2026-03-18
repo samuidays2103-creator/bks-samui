@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -39,6 +39,30 @@
       "url": "https://samuibiz.club"
     }
   }
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Мероприятия — БКС">
+  <meta name="twitter:description" content="Мероприятия бизнес-клуба: еженедельные Бизнес-среды и специальные события.">
+  <meta name="twitter:image" content="https://samuibiz.club/images/hero-events.jpg">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "БКС",
+      "item": "https://samuibiz.club/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Мероприятия",
+      "item": "https://samuibiz.club/events.html"
+    }
+  ]
+}
   </script>
 </head>
 <body>
@@ -81,6 +105,7 @@
   </section>
 
   <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><a href="index.html" data-ru="Главная" data-en="Home">Главная</a> <span class="breadcrumb__sep">/</span> <span data-ru="Мероприятия" data-en="Events">Мероприятия</span></div></nav>
     <!-- Regular Events -->
     <section class="section">
       <div class="container">
@@ -212,7 +237,7 @@
               </div>
               <p class="event-card__desc" data-en="A hands-on business breakfast about free traffic from search engines. Google Maps optimization for local businesses, profile setup mistakes costing you money, and tools to attract customers without big ad budgets." data-ru="Практический бизнес-завтрак о бесплатном трафике из поисковых систем. Google Maps как нефть для острова — как попасть в топ выдачи, ошибки в оформлении профилей, из-за которых бизнес теряет деньги, и инструменты для привлечения клиентов без раздутых рекламных бюджетов.">Практический бизнес-завтрак о бесплатном трафике из поисковых систем. Google Maps как нефть для острова — как попасть в топ выдачи, ошибки в оформлении профилей, из-за которых бизнес теряет деньги, и инструменты для привлечения клиентов без раздутых рекламных бюджетов.</p>
               <div style="margin-top: 12px;">
-                <img src="images/20260211_101758.jpg" alt="Pavel Kuleshov — Google SEO presentation" style="width: 320px; height: 200px; object-fit: cover; border-radius: 8px;">
+                <picture><source srcset="images/20260211_101758.webp" type="image/webp"><img loading="lazy" src="images/20260211_101758.jpg" alt="Pavel Kuleshov — Google SEO presentation" style="width: 320px; height: 200px; object-fit: cover; border-radius: 8px;"></picture>
               </div>
             </div>
           </div>
@@ -303,6 +328,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.min.js"></script>
 </body>
 </html>

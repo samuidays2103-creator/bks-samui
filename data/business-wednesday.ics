@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BKS//Business Club Samui//EN
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Bangkok:20260318T100000
+DURATION:PT2H
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:BKS Business Wednesday / Бизнес-среда
+DESCRIPTION:Weekly networking meeting of Business Club Samui. Cafe Plankton, Koh Samui.\nНетворкинг-встреча Бизнес-Клуба Самуи. Кафе Планктон.
+LOCATION:PlunkTone Cafe, Koh Samui, Thailand
+URL:https://t.me/samuibiz
+END:VEVENT
+END:VCALENDAR

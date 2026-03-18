@@ -107,7 +107,13 @@ function renderBusinessCards(businesses, filter) {
 }
 
 function initCategoryFilter() {
+  // Hide empty categories — only show filters with actual businesses
+  const usedCategories = new Set(currentBusinesses.map(b => b.category));
   document.querySelectorAll('.filter-btn').forEach(btn => {
+    const cat = btn.dataset.category;
+    if (cat !== 'all' && !usedCategories.has(cat)) {
+      btn.style.display = 'none';
+    }
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b =>
         b.classList.remove('filter-btn--active'));

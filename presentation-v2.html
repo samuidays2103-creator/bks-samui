@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1120">
+    <title>Андрей Дмитриев — Презентация</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============ RESET & BASE ============ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background: #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+        }
+
+        /* ============ PRINT ============ */
+        @page {
+            margin: 0;
+            size: 1120px 630px landscape;
+        }
+
+        @media print {
+            body {
+                background: white;
+                gap: 0;
+                padding: 0;
+            }
+
+            .slide {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* ============ SLIDE BASE ============ */
+        .slide {
+            width: 1120px;
+            height: 630px;
+            page-break-after: always;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ============ TYPOGRAPHY ============ */
+        .slide-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 34px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a2332;
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: #c9a227;
+            border-radius: 2px;
+        }
+
+        .slide-title-dotted {
+            border-bottom: 2px dotted #d0d0d0;
+            padding-bottom: 14px;
+        }
+
+        .slide-title-dotted::after {
+            bottom: -2px;
+        }
+
+        .bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bullets li {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 1.55;
+            color: #333;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .bullets li::before {
+            content: '\279C';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            color: #c9a227;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .bullets li.sub-item {
+            padding-left: 54px;
+            font-size: 17px;
+            color: #555;
+        }
+
+        .bullets li.sub-item::before {
+            left: 30px;
+            content: '\2013';
+            color: #999;
+        }
+
+        .bullets li.no-marker::before {
+            content: none;
+        }
+
+        /* ============ SLIDE 1 — COVER ============ */
+        .slide-cover {
+            background-image: url('images/pres-assets/p1-img1.jpeg');
+            background-size: cover;
+            background-position: center 20%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 30%,
+                rgba(0, 0, 0, 0.25) 55%,
+                rgba(10, 15, 25, 0.85) 100%
+            );
+        }
+
+        .cover-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding-bottom: 60px;
+        }
+
+        .cover-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 50px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 22px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.88);
+            letter-spacing: 1px;
+        }
+
+        /* ============ SLIDES 2, 3 — SPLIT LAYOUT ============ */
+        .slide-split {
+            display: flex;
+        }
+
+        .slide-split .text-area {
+            width: 35%;
+            padding: 48px 36px 48px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-split .image-area {
+            width: 65%;
+            overflow: hidden;
+        }
+
+        .slide-split .image-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 0;
+        }
+
+        .slide-split .text-area .slide-title {
+            font-size: 26px;
+        }
+
+        .slide-split .text-area .bullets {
+            gap: 18px;
+        }
+
+        .slide-split .text-area .bullets li {
+            font-size: 17px;
+        }
+
+        /* ============ SLIDE 4 — SCHOOL + PHOTOS ============ */
+        .slide-school {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-school .text-section {
+            padding: 40px 52px 20px 52px;
+            flex: 0 0 auto;
+        }
+
+        .slide-school .text-section .slide-title {
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .slide-school .text-section .bullets {
+            gap: 8px;
+        }
+
+        .slide-school .text-section .bullets li {
+            font-size: 16px;
+            line-height: 1.45;
+        }
+
+        .slide-school .photos-grid {
+            flex: 1;
+            display: flex;
+            gap: 12px;
+            padding: 12px 52px 32px 52px;
+            min-height: 0;
+        }
+
+        .slide-school .photos-grid .photo-item {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-school .photos-grid .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ============ TEXT-ONLY SLIDES (5, 6, 7, 8, 10) ============ */
+        .slide-text {
+            padding: 48px 64px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-text .slide-title {
+            margin-bottom: 32px;
+        }
+
+        .slide-text .bullets {
+            gap: 18px;
+        }
+
+        .slide-text .bullets li {
+            font-size: 21px;
+            line-height: 1.55;
+        }
+
+        /* Dense text slides */
+        .slide-text-dense .bullets {
+            gap: 12px;
+        }
+
+        .slide-text-dense .bullets li {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .slide-text-dense .bullets li.sub-item {
+            font-size: 16px;
+        }
+
+        /* Dense text slides (slide 7, 8) */
+        .slide-text-xdense {
+            padding: 44px 60px;
+        }
+
+        .slide-text-xdense .slide-title {
+            margin-bottom: 24px;
+        }
+
+        .slide-text-xdense .bullets {
+            gap: 10px;
+        }
+
+        .slide-text-xdense .bullets li {
+            font-size: 16.5px;
+            line-height: 1.45;
+        }
+
+        .slide-text-xdense .bullets li.sub-item {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        /* Highlight for "Важно:" */
+        .highlight-important {
+            background: rgba(201, 162, 39, 0.1);
+            border-left: 3px solid #c9a227;
+            padding: 8px 12px;
+            margin-left: -10px;
+            border-radius: 0 6px 6px 0;
+            font-size: 15px !important;
+            line-height: 1.45 !important;
+        }
+
+        .highlight-important::before {
+            content: none !important;
+        }
+
+        /* ============ SLIDE 9 — INSTAGRAM ============ */
+        .slide-insta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px 80px;
+        }
+
+        .slide-insta .slide-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .slide-insta .slide-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .slide-insta .insta-text {
+            font-size: 20px;
+            color: #444;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .slide-insta .insta-text .arrow-marker {
+            color: #c9a227;
+            font-weight: 600;
+        }
+
+        .slide-insta .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slide-insta .qr-container img {
+            width: 260px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-insta .insta-handle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 2px;
+            color: #1a2332;
+            text-transform: uppercase;
+        }
+
+        /* ============ SLIDE 10 ============ */
+        .slide-question {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-question .bullets {
+            gap: 36px;
+        }
+
+        .slide-question .bullets li {
+            font-size: 22px;
+            line-height: 1.6;
+        }
+    </style>
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 — COVER ==================== -->
+<div class="slide slide-cover">
+    <div class="cover-text">
+        <div class="cover-name">Андрей Дмитриев</div>
+        <div class="cover-subtitle">16 лет бизнеса на Самуи</div>
+    </div>
+</div>
+
+<!-- ==================== SLIDE 2 — EASY DAYS VILLA ==================== -->
+<div class="slide slide-split">
+    <div class="text-area">
+        <h2 class="slide-title slide-title-dotted">Easy Days Villa</h2>
+        <ul class="bullets">
+            <li>23 виллы с видом на море, 700 метров до пляжа Маенам</li>
+            <li>От 200 квадратов</li>
+            <li>3-5 спален/гардеробная/балкон/2-3 этажа/бассейн</li>
+        </ul>
+    </div>
+    <div class="image-area">
+        <img src="images/pres-assets/p2-img1.jpeg" alt="Easy Days Villa — aerial render">
+    </div>
+</div>
+
+<!-- ==================== SLIDE 3 — МЕЖДУНАРОДНАЯ ШКОЛА ==================== -->
+<div class="slide slide-split">
+    <div class="text-area">
+        <h2 class="slide-title slide-title-dotted">Международная школа</h2>
+        <ul class="bullets">
+            <li>Сингапурская аккредитация</li>
+            <li>300 человек</li>
+            <li>Начальная и средняя школа</li>
+            <li>Обучение на английском языке</li>
+        </ul>
+    </div>
+    <div class="image-area">
+        <img src="images/pres-assets/p3-img1.jpeg" alt="Международная школа — render">
+    </div>
+</div>
+
+<!-- ==================== SLIDE 4 — РУССКОЯЗЫЧНАЯ ШКОЛА ==================== -->
+<div class="slide slide-school">
+    <div class="text-section">
+        <h2 class="slide-title slide-title-dotted">Русскоязычная школа и детский садик</h2>
+        <ul class="bullets">
+            <li>Расположение Бопут</li>
+            <li>Профессиональные учителя, программа «Русская школа», аттестация</li>
+            <li>Классы до 10 человек</li>
+            <li>Дополнительные занятия и подготовка к школе</li>
+            <li>Ждём ваших деток в нашем уютном пространстве</li>
+        </ul>
+    </div>
+    <div class="photos-grid">
+        <div class="photo-item">
+            <img src="images/pres-assets/p4-img1.jpeg" alt="Kids photo 1">
+        </div>
+        <div class="photo-item">
+            <img src="images/pres-assets/p4-img2.jpeg" alt="Kids photo 2">
+        </div>
+        <div class="photo-item">
+            <img src="images/pres-assets/p4-img4.jpeg" alt="Kids photo 3">
+        </div>
+        <div class="photo-item">
+            <img src="images/pres-assets/p4-img5.jpeg" alt="Kids photo 4">
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SLIDE 5 — ЧТО БЫЛО ==================== -->
+<div class="slide slide-text">
+    <h2 class="slide-title slide-title-dotted">Что было</h2>
+    <ul class="bullets">
+        <li>Как я остался без юристов</li>
+        <li>Пришлось делать work permit и визу самостоятельно</li>
+        <li>Открытие: work permit стоит 3 000 бат (у юристов — 15 000 бат)</li>
+        <li>Формы на тайском — ничего сложного, документы подаются по чек-листу, а теперь онлайн</li>
+        <li>Госорганы (Labor Department, Social Security, Revenue Department) относятся приветливо</li>
+    </ul>
+</div>
+
+<!-- ==================== SLIDE 6 — ЧТО ЕСТЬ (part 1) ==================== -->
+<div class="slide slide-text slide-text-dense">
+    <h2 class="slide-title slide-title-dotted">Что есть</h2>
+    <ul class="bullets">
+        <li>1. Страна ужесточает контроль</li>
+        <li class="sub-item">Борьба с номиналами</li>
+        <li class="sub-item">Налоговая, Labor, Social — больше проверок</li>
+        <li>2. Юристы подделывают документы</li>
+        <li class="sub-item">Случаи неоплаты Social Security от имени клиента</li>
+        <li class="sub-item">Подделка квитанций — вскрывается при подаче на визу / work permit</li>
+        <li>3. Накрутка цен</li>
+        <li class="sub-item">Открытие компании: юрист сходу пишет 150–200 тыс. бат</li>
+        <li class="sub-item">Потом "допродажи": регистрация Social Security — ещё 8 000 бат и т.д.</li>
+    </ul>
+</div>
+
+<!-- ==================== SLIDE 7 — ЧТО ЕСТЬ (part 2) ==================== -->
+<div class="slide slide-text slide-text-dense slide-text-xdense">
+    <h2 class="slide-title slide-title-dotted">Что есть</h2>
+    <ul class="bullets">
+        <li>4. Перестраховка юристов убивает бизнес</li>
+        <li class="sub-item">Правило "4 тайца на 1 фаранга" — юрист делает "как положено" (4 тайца × 12 мес × 1 200 бат Social)</li>
+        <li class="sub-item">Реальность: достаточно 1 тайца при директоре-фаранге</li>
+        <li class="sub-item">Новый предприниматель видит цифры → отказывается от бизнеса → комьюнити теряет человека</li>
+        <li>5. Земельные юристы без экспертизы</li>
+        <li class="sub-item">5+ юристов по рекомендации — все брали до 100 тыс. бат за договор аренды</li>
+        <li class="sub-item">Договоры — шаблоны из интернета, без реальной защиты арендатора</li>
+        <li class="sub-item">Термины Superficies, Sale of Structure — на Самуи почти никто не знает</li>
+    </ul>
+</div>
+
+<!-- ==================== SLIDE 8 — ЧТО ДЕЛАТЬ ==================== -->
+<div class="slide slide-text slide-text-xdense">
+    <h2 class="slide-title slide-title-dotted">Что делать</h2>
+    <ul class="bullets">
+        <li>Получите все пароли от госсервисов: DBD (регистрация компании), Labor Department, Revenue Department</li>
+        <li class="no-marker highlight-important">Важно: через DBD можно за 5 минут сменить акционеров — если пароль у юриста, вы в зоне риска</li>
+        <li>Платите Social Security сами — один QR-код, один клик, Google Chrome переводит тайский сайт</li>
+        <li>Платите PND1 (налог) сами — тоже простая процедура с QR-кодом</li>
+        <li>Знайте свой налоговый номер</li>
+        <li>Контролируйте процессы — даже если не делаете всё сами, следите за тем, что происходит в вашей компании</li>
+        <li>Выписывайте тайского директора — как только получите пермит на себя, не зависьте от него и не платите ему, особенно если он ваш тайский юрист.</li>
+        <li>Акционеров дробите, чтобы у них не было права вето на действия директора</li>
+    </ul>
+</div>
+
+<!-- ==================== SLIDE 9 — МОЙ ИНСТАГРАМ ==================== -->
+<div class="slide slide-insta">
+    <h2 class="slide-title slide-title-dotted">Мой инстаграм</h2>
+    <p class="insta-text"><span class="arrow-marker">➤</span> Рассказываю о том, как избежать ошибок / сэкономить бюджет / купить шикарную виллу по спецпредложению&#x1F525;</p>
+    <div class="qr-container">
+        <img src="images/pres-assets/p9-img3.jpeg" alt="Instagram QR Code">
+        <span class="insta-handle">@SAMUIDAYS</span>
+    </div>
+</div>
+
+<!-- ==================== SLIDE 10 — ВОПРОС К ЗАЛУ ==================== -->
+<div class="slide slide-text slide-question">
+    <h2 class="slide-title slide-title-dotted">Вопрос к залу</h2>
+    <ul class="bullets">
+        <li>Есть тут риэлторы? Приглашаю риэлторов отдельно ко мне подойти, и я расскажу вам, почему вам со мной получится заработать больше</li>
+        <li>Есть ли среди слушателей семьи с детьми, заинтересованные в обучении детей в международной школе по более выгодным, чем в Винфилде, Лисе и Панади, условиям? Тоже подойдите ко мне, всё расскажу</li>
+    </ul>
+</div>
+
+</body>
+</html>

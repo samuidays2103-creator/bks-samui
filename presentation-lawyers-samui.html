@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Юристы на Самуи: реальность и подводные камни — Андрей Дмитриев, BKS 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { margin: 0; size: 1120px 630px landscape; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0c1629;
+    --navy-mid: #162240;
+    --navy-light: #1e3155;
+    --gold: #c9a227;
+    --gold-light: #e2c55a;
+    --gold-dark: #a07f14;
+    --gold-pale: rgba(201,162,39,0.08);
+    --gold-pale2: rgba(201,162,39,0.15);
+    --green: #16a34a;
+    --green-dark: #15803d;
+    --green-pale: rgba(22,163,74,0.08);
+    --red: #dc2626;
+    --red-pale: rgba(220,38,38,0.06);
+    --orange: #ea580c;
+    --orange-pale: rgba(234,88,12,0.07);
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+    --white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--slate-800);
+    line-height: 1.5;
+    background: var(--slate-200);
+    font-size: 13.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== SLIDE SYSTEM ===== */
+  .slide {
+    width: 1120px;
+    height: 630px;
+    margin: 24px auto;
+    background: var(--white);
+    box-shadow: var(--shadow-lg);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== SLIDE HEADER ===== */
+  .slide-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    height: 58px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .slide-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+
+  .slide-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  .slide-header .slide-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.35;
+    letter-spacing: 1px;
+    margin-left: auto;
+  }
+
+  .slide-header .section-tag {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-left: 16px;
+  }
+
+  /* ===== SLIDE BODY ===== */
+  .slide-body {
+    flex: 1;
+    padding: 28px 48px 20px;
+    overflow: hidden;
+  }
+
+  /* ===== SLIDE FOOTER ===== */
+  .slide-footer {
+    padding: 10px 48px;
+    font-size: 10px;
+    color: var(--slate-400);
+    border-top: 1px solid var(--slate-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+
+  .slide-footer .logo-text {
+    font-weight: 700;
+    color: var(--slate-500);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 9px;
+  }
+
+  /* ===== COVER SLIDE ===== */
+  .cover {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0;
+    position: relative;
+  }
+
+  .cover .cover-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center 20%;
+    z-index: 0;
+  }
+
+  .cover .cover-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(12,22,41,0.88) 0%, rgba(12,22,41,0.72) 40%, rgba(12,22,41,0.85) 100%);
+    z-index: 1;
+  }
+
+  .cover .top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark));
+    z-index: 3;
+  }
+
+  .cover .cover-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 60px 80px;
+  }
+
+  .cover .badge {
+    display: inline-block;
+    background: rgba(201,162,39,0.15);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    border-radius: 100px;
+    border: 1px solid rgba(201,162,39,0.3);
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .cover h1 span { color: var(--gold-light); }
+
+  .cover .tagline {
+    font-size: 22px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 36px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  .cover .topic-badge {
+    display: inline-block;
+    background: rgba(201,162,39,0.12);
+    border: 1px solid rgba(201,162,39,0.25);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 32px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .cover .meta {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    opacity: 0.25;
+    letter-spacing: 0.5px;
+    z-index: 2;
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: 12.5px;
+    color: var(--slate-600);
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  p { margin-bottom: 10px; color: var(--slate-600); }
+
+  /* ===== GRID LAYOUTS ===== */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .cols-23 { display: grid; grid-template-columns: 2fr 3fr; gap: 32px; }
+  .cols-32 { display: grid; grid-template-columns: 3fr 2fr; gap: 36px; }
+  .cols-46 { display: grid; grid-template-columns: 2fr 3fr; gap: 28px; }
+
+  /* ===== STAT CARDS ===== */
+  .stat-card {
+    background: var(--slate-50);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    text-align: center;
+    border: 1px solid var(--slate-200);
+  }
+
+  .stat-card.gold {
+    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 4px 20px rgba(201,162,39,0.3);
+  }
+
+  .stat-card.navy {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 4px 20px rgba(12,22,41,0.3);
+  }
+
+  .stat-card.red {
+    background: var(--red-pale);
+    border: 2px solid var(--red);
+  }
+
+  .stat-card.green {
+    background: var(--green-pale);
+    border: 2px solid var(--green);
+  }
+
+  .stat-val {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9.5px;
+    margin-top: 6px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+  }
+
+  /* ===== FEATURE BOXES ===== */
+  .box {
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .box.gold-outline {
+    border: 1.5px solid var(--gold);
+    background: linear-gradient(135deg, rgba(201,162,39,0.04) 0%, rgba(201,162,39,0.08) 100%);
+  }
+
+  .box.green-outline {
+    border: 1.5px solid var(--green);
+    background: linear-gradient(135deg, rgba(22,163,74,0.03) 0%, rgba(22,163,74,0.07) 100%);
+  }
+
+  .box.red-outline {
+    border: 1.5px solid var(--red);
+    background: var(--red-pale);
+  }
+
+  .box.orange-outline {
+    border: 1.5px solid var(--orange);
+    background: var(--orange-pale);
+  }
+
+  .box.navy-fill {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 24px rgba(12,22,41,0.2);
+  }
+
+  .box h4 { margin-bottom: 6px; }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    font-size: 12.5px;
+  }
+
+  .callout.gold {
+    background: linear-gradient(135deg, rgba(201,162,39,0.06) 0%, rgba(201,162,39,0.12) 100%);
+    border-left: 3px solid var(--gold);
+  }
+
+  .callout.green {
+    background: linear-gradient(135deg, rgba(22,163,74,0.04) 0%, rgba(22,163,74,0.1) 100%);
+    border-left: 3px solid var(--green);
+  }
+
+  .callout.red {
+    background: var(--red-pale);
+    border-left: 3px solid var(--red);
+  }
+
+  .callout.orange {
+    background: var(--orange-pale);
+    border-left: 3px solid var(--orange);
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+
+  /* ===== BULLET LISTS ===== */
+  ul.clean {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.clean li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    font-size: 12.5px;
+    color: var(--slate-600);
+  }
+
+  ul.clean li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+
+  ul.clean li strong { color: var(--slate-800); }
+
+  ul.check {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.check li {
+    padding: 4px 0 4px 26px;
+    position: relative;
+    font-size: 12.5px;
+    color: var(--slate-600);
+  }
+
+  ul.check li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    background: var(--green);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  ul.check li::after {
+    content: '\2713';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  ul.check li strong { color: var(--slate-800); }
+
+  /* ===== DANGER LIST ===== */
+  ul.danger {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.danger li {
+    padding: 5px 0 5px 26px;
+    position: relative;
+    font-size: 12.5px;
+    color: var(--slate-600);
+  }
+
+  ul.danger li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    background: var(--red);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  ul.danger li::after {
+    content: '!';
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    color: var(--red);
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  ul.danger li strong { color: var(--slate-800); }
+
+  /* ===== NUMBERED LIST ===== */
+  ol.steps {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+  }
+
+  ol.steps li {
+    padding: 6px 0 6px 36px;
+    position: relative;
+    font-size: 12px;
+    color: var(--slate-600);
+    counter-increment: step-counter;
+  }
+
+  ol.steps li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  ol.steps li strong { color: var(--slate-800); }
+
+  /* ===== COMPARISON CARDS ===== */
+  .compare-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px;
+    margin: 16px 0;
+    background: var(--slate-50);
+    border-radius: var(--radius);
+    border: 1px solid var(--slate-200);
+  }
+
+  .compare-item {
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    min-width: 140px;
+  }
+
+  .compare-item.bad {
+    background: var(--red-pale);
+    border: 2px solid var(--red);
+  }
+
+  .compare-item.good {
+    background: var(--green-pale);
+    border: 2px solid var(--green);
+  }
+
+  .compare-item .compare-val {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .compare-item.bad .compare-val { color: var(--red); }
+  .compare-item.good .compare-val { color: var(--green); }
+
+  .compare-item .compare-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--slate-500);
+    margin-top: 4px;
+  }
+
+  .compare-arrow {
+    font-size: 28px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ===== ICON FEATURES ===== */
+  .icon-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .icon-feat {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--slate-50);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--slate-100);
+  }
+
+  .icon-feat.danger {
+    background: var(--red-pale);
+    border: 1px solid rgba(220,38,38,0.2);
+  }
+
+  .icon-feat.warning {
+    background: var(--orange-pale);
+    border: 1px solid rgba(234,88,12,0.2);
+  }
+
+  .icon-feat.success {
+    background: var(--green-pale);
+    border: 1px solid rgba(22,163,74,0.2);
+  }
+
+  .icon-feat .if-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gold-pale2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .icon-feat.danger .if-icon { background: rgba(220,38,38,0.12); }
+  .icon-feat.warning .if-icon { background: rgba(234,88,12,0.12); }
+  .icon-feat.success .if-icon { background: rgba(22,163,74,0.12); }
+
+  .icon-feat .if-text {
+    font-size: 11.5px;
+    color: var(--slate-600);
+    line-height: 1.4;
+  }
+
+  .icon-feat .if-text strong {
+    display: block;
+    color: var(--slate-800);
+    font-size: 12px;
+  }
+
+  /* ===== SECTION LABEL ===== */
+  .section-label {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .section-label.red { color: var(--red); }
+  .section-label.green { color: var(--green); }
+
+  /* ===== QUOTE ===== */
+  .quote-block {
+    border-left: 4px solid var(--gold);
+    padding: 20px 28px;
+    margin: 16px 0;
+    background: linear-gradient(135deg, rgba(201,162,39,0.04) 0%, rgba(201,162,39,0.08) 100%);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .quote-block p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    color: var(--navy);
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  /* ===== MISC ===== */
+  .note {
+    font-size: 10.5px;
+    color: var(--slate-400);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--slate-200), transparent);
+    margin: 14px 0;
+  }
+
+  strong.gold { color: var(--gold-dark); }
+  strong.green { color: var(--green-dark); }
+  strong.red { color: var(--red); }
+  strong.navy { color: var(--navy); }
+
+  /* ===== CTA BOX ===== */
+  .cta-box {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(12,22,41,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cta-box > * { position: relative; z-index: 1; }
+
+  .cta-box h3 {
+    color: var(--gold-light);
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .cta-box p {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  /* ===== PHOTO GRID ===== */
+  .photo-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .photo-grid-4 .photo-cell {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border: 2px solid var(--slate-100);
+  }
+
+  .photo-grid-4 .photo-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ===== DANGER BLOCK ===== */
+  .danger-block {
+    border-left: 4px solid var(--red);
+    background: var(--red-pale);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+
+  .danger-block h4 {
+    color: var(--red);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .danger-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .danger-block ul li {
+    font-size: 11.5px;
+    color: var(--slate-600);
+    padding: 2px 0 2px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .danger-block ul li::before {
+    content: '\2013';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ===== ACTION BLOCK ===== */
+  .action-block {
+    border-left: 4px solid var(--green);
+    background: linear-gradient(135deg, rgba(22,163,74,0.03) 0%, rgba(22,163,74,0.07) 100%);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+
+  .action-block .action-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--slate-800);
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .action-block .action-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .action-block .action-desc {
+    font-size: 11px;
+    color: var(--slate-500);
+    padding-left: 26px;
+    line-height: 1.4;
+  }
+
+  .action-block.warning-sub {
+    border-left-color: var(--red);
+    background: var(--red-pale);
+    margin-left: 26px;
+    margin-top: -4px;
+    padding: 8px 12px;
+  }
+
+  .action-block.warning-sub .action-desc {
+    padding-left: 0;
+    color: var(--red);
+    font-weight: 600;
+    font-size: 10.5px;
+  }
+
+  /* ===== CHAIN REACTION ===== */
+  .chain-reaction {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--orange-pale);
+    border: 1px solid rgba(234,88,12,0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  .chain-step {
+    flex: 1;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--slate-700);
+    padding: 8px 6px;
+    background: var(--white);
+    border-radius: var(--radius-xs);
+    border: 1px solid rgba(234,88,12,0.15);
+    line-height: 1.3;
+  }
+
+  .chain-arrow {
+    color: var(--orange);
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== GOLD CALLOUT BOX ===== */
+  .gold-callout {
+    border: 2px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 22px 28px;
+    background: linear-gradient(135deg, rgba(201,162,39,0.04) 0%, rgba(201,162,39,0.1) 100%);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .gold-callout::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 24px;
+    right: 24px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .gold-callout p {
+    font-size: 13.5px;
+    color: var(--slate-700);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; }
+    .slide {
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+      width: 100%;
+      height: 100vh;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+    .cover .cover-bg {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cover .cover-overlay {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide-header {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide-header::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .box.navy-fill, .cta-box, .stat-card.navy, .stat-card.gold {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .compare-item.bad, .compare-item.good {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .danger-block, .action-block, .callout, .icon-feat {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .chain-reaction, .chain-step {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    ol.steps li::before, .action-block .action-title .num {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .gold-callout {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: COVER -->
+<!-- ============================================================ -->
+<div class="slide cover">
+  <div class="top-line"></div>
+  <div class="cover-bg" style="background-image: url('images/pres-assets/p1-img1.jpeg');"></div>
+  <div class="cover-overlay"></div>
+  <div class="cover-content">
+    <div class="badge">Юристы на Самуи: реальность и подводные камни</div>
+    <h1><span>АНДРЕЙ ДМИТРИЕВ</span></h1>
+    <div class="tagline">16 лет бизнес на Самуи</div>
+    <div class="meta">BKS &mdash; Бизнес-Клуб Самуи &nbsp;&bull;&nbsp; Koh Samui, Thailand &nbsp;&bull;&nbsp; 2026</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: EASY DAYS VILLA -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Easy Days Villa</h2>
+    <span class="slide-num">02 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div class="cols-46">
+      <div>
+        <div class="section-label">Проект</div>
+        <h3>Посёлок премиум-класса на Маенам</h3>
+
+        <ul class="clean" style="margin-bottom: 16px;">
+          <li><strong>23 виллы</strong> с видом на море, 700 метров до пляжа Маенам</li>
+          <li>От <strong>200 квадратов</strong></li>
+          <li><strong>3&ndash;5 спален</strong> / гардеробная / балкон / 2&ndash;3 этажа / бассейн</li>
+        </ul>
+
+        <div class="callout gold">
+          <div class="callout-icon">&#9733;</div>
+          <div><strong style="color: var(--slate-800);">Инвестиционный проект:</strong> привлекаем инвестиции &mdash; обращайтесь!</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <div style="border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); border: 2px solid var(--slate-200); width: 100%;">
+          <img src="images/pres-assets/p2-img1.jpeg" alt="Easy Days Villa &mdash; аэрорендер посёлка" style="width: 100%; height: auto; display: block;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>02 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: МЕЖДУНАРОДНАЯ ШКОЛА -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Международная школа</h2>
+    <span class="slide-num">03 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; height: 100%;">
+      <div>
+        <div class="section-label">Образование</div>
+        <h3>Easydays International School</h3>
+
+        <ul class="clean" style="margin-bottom: 16px;">
+          <li><strong>Сингапурская аккредитация</strong></li>
+          <li><strong>300 человек</strong> &mdash; вместимость</li>
+          <li><strong>Начальная и средняя школа</strong></li>
+          <li>Обучение на <strong>английском языке</strong></li>
+        </ul>
+
+        <div class="callout gold">
+          <div class="callout-icon">&#127891;</div>
+          <div><strong style="color: var(--slate-800);">Качественное международное образование</strong> прямо на Самуи, без необходимости отправлять детей на материк.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <div style="border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); border: 2px solid var(--slate-200); width: 100%;">
+          <img src="images/pres-assets/p3-img1.jpeg" alt="Международная школа &mdash; рендер здания" style="width: 100%; height: auto; display: block;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>03 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: РУССКОЯЗЫЧНАЯ ШКОЛА И ДЕТСКИЙ САДИК -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Русскоязычная школа и детский садик</h2>
+    <span class="slide-num">04 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div style="margin-bottom: 14px;">
+      <div class="section-label">Образование на русском</div>
+      <h3>Ждём ваших деток в нашем уютном пространстве</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+        <ul class="clean" style="margin: 0;">
+          <li>Расположение &mdash; <strong>Бопут</strong></li>
+          <li>Профессиональные учителя, программа <strong>&laquo;Русская школа&raquo;</strong>, аттестация</li>
+        </ul>
+        <ul class="clean" style="margin: 0;">
+          <li>Классы до <strong>10 человек</strong></li>
+          <li>Дополнительные занятия и <strong>подготовка к школе</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="photo-grid-4">
+      <div class="photo-cell">
+        <img src="images/pres-assets/p4-img1.jpeg" alt="Дети на занятиях 1">
+      </div>
+      <div class="photo-cell">
+        <img src="images/pres-assets/p4-img2.jpeg" alt="Дети на занятиях 2">
+      </div>
+      <div class="photo-cell">
+        <img src="images/pres-assets/p4-img4.jpeg" alt="Дети на занятиях 3">
+      </div>
+      <div class="photo-cell">
+        <img src="images/pres-assets/p4-img5.jpeg" alt="Дети на занятиях 4">
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>04 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: ЧТО БЫЛО -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Что было</h2>
+    <span class="section-tag">Как я остался без юристов</span>
+    <span class="slide-num">05 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div class="cols-2">
+      <div>
+        <div class="section-label">История</div>
+        <h3>Как я остался без юристов</h3>
+
+        <ul class="clean" style="margin-bottom: 16px;">
+          <li>Пришлось делать <strong>work permit и визу самостоятельно</strong></li>
+          <li>Формы на тайском &mdash; <strong>ничего сложного,</strong> документы подаются по чек-листу, а теперь <strong>онлайн</strong></li>
+          <li>Госорганы (Labor Department, Social Security, Revenue Department) <strong>относятся приветливо</strong></li>
+        </ul>
+
+        <div class="callout green">
+          <div class="callout-icon">&#10003;</div>
+          <div><strong style="color: var(--green-dark);">Главный вывод:</strong> всё можно делать самому &mdash; это проще, чем кажется.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Главное открытие</div>
+        <h3>Work permit: реальная стоимость</h3>
+
+        <div class="compare-box">
+          <div class="compare-item good">
+            <div class="compare-val">3 000 &#3647;</div>
+            <div class="compare-label">Самостоятельно</div>
+          </div>
+          <div class="compare-arrow">&#8592;</div>
+          <div class="compare-item bad">
+            <div class="compare-val">15 000 &#3647;</div>
+            <div class="compare-label">Через юриста</div>
+          </div>
+        </div>
+
+        <div class="callout green" style="margin-top: 12px;">
+          <div class="callout-icon">&#128161;</div>
+          <div><strong style="color: var(--green-dark);">Экономия 80%</strong> на каждом work permit. При нескольких пермитах разница огромная.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>05 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: ЧТО ЕСТЬ (часть 1) -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Что есть</h2>
+    <span class="section-tag">Проблемы с юристами</span>
+    <span class="slide-num">06 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div class="cols-3" style="gap: 18px;">
+      <!-- Block 1 -->
+      <div>
+        <div class="danger-block" style="height: 100%;">
+          <h4>
+            <span style="font-size: 16px;">&#9888;</span>
+            1. Страна ужесточает контроль
+          </h4>
+          <ul>
+            <li>Борьба с номиналами</li>
+            <li>Налоговая, Labor, Social &mdash; <strong>больше проверок</strong></li>
+            <li>То, что раньше прокатывало &mdash; теперь чревато последствиями</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Block 2 -->
+      <div>
+        <div class="danger-block" style="height: 100%;">
+          <h4>
+            <span style="font-size: 16px;">&#128196;</span>
+            2. Юристы подделывают документы
+          </h4>
+          <ul>
+            <li>Случаи <strong>неоплаты Social Security</strong> от имени клиента</li>
+            <li><strong>Подделка квитанций</strong> &mdash; вскрывается при подаче на визу / work permit</li>
+            <li>Штрафы и последствия &mdash; на <strong>вас</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Block 3 -->
+      <div>
+        <div class="danger-block" style="height: 100%;">
+          <h4>
+            <span style="font-size: 16px;">&#128176;</span>
+            3. Накрутка цен
+          </h4>
+          <ul>
+            <li>Открытие компании: юрист сходу пишет <strong class="red">150&ndash;200 тыс. бат</strong></li>
+            <li>&laquo;Допродажи&raquo;: Social Security &mdash; ещё 8 000 бат</li>
+            <li>Каждый шаг &mdash; отдельный чек, суммы <strong>растут</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="box navy-fill" style="margin-top: 14px; padding: 14px 22px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font-size: 22px;">&#128680;</span>
+        <p style="color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 0; line-height: 1.6;">
+          <strong style="color: var(--gold-light);">Ключевой риск:</strong> Если вы не контролируете процессы &mdash; вы не знаете, что от вашего имени подаётся в госорганы. А ответственность на вас.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>06 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: ЧТО ЕСТЬ (часть 2) -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Что есть</h2>
+    <span class="section-tag">продолжение</span>
+    <span class="slide-num">07 / 10</span>
+  </div>
+  <div class="slide-body">
+    <div class="cols-2">
+      <!-- Block 4 -->
+      <div>
+        <div class="danger-block" style="margin-bottom: 14px;">
+          <h4>
+            <span style="font-size: 16px;">&#128683;</span>
+            4. Перестраховка юристов убивает бизнес
+          </h4>
+          <ul>
+            <li>Правило &laquo;4 тайца на 1 фаранга&raquo; &mdash; юрист делает &laquo;как положено&raquo;</li>
+            <li><strong>4 тайца</strong> &times; 12 мес &times; 1 200 бат Social = <strong class="red">57 600 бат/год</strong></li>
+            <li><strong>Реальность:</strong> достаточно <strong class="green">1 тайца</strong> при директоре-фаранге</li>
+            <li>Новый предприниматель видит цифры &rarr; <strong>отказывается от бизнеса</strong></li>
+          </ul>
+        </div>
+
+        <div class="chain-reaction">
+          <div class="chain-step">Завышенные<br>цифры</div>
+          <div class="chain-arrow">&rarr;</div>
+          <div class="chain-step">Отказ от<br>бизнеса</div>
+          <div class="chain-arrow">&rarr;</div>
+          <div class="chain-step">Потеря для<br>комьюнити</div>
+        </div>
+      </div>
+
+      <!-- Block 5 -->
+      <div>
+        <div class="danger-block" style="margin-bottom: 14px;">
+          <h4>
+            <span style="font-size: 16px;">&#128220;</span>
+            5. Земельные юристы без экспертизы
+          </h4>
+          <ul>
+            <li><strong>5+ юристов</strong> по рекомендации &mdash; все брали <strong>до 100 тыс. бат</strong> за договор аренды</li>
+            <li>Договоры &mdash; <strong>шаблоны из интернета,</strong> без реальной защиты арендатора</li>
+            <li>Термины <strong>Superficies, Sale of Structure</strong> &mdash; на Самуи почти никто не знает</li>
+          </ul>
+        </div>
+
+        <div class="callout orange">
+          <div class="callout-icon">&#9888;</div>
+          <div><strong style="color: var(--orange);">Итог:</strong> Платите 100 000 бат &mdash; получаете шаблон, который можно скачать бесплатно. Без адаптации под вашу ситуацию.</div>
+        </div>
+
+        <div class="callout gold" style="margin-top: 4px;">
+          <div class="callout-icon">&#128161;</div>
+          <div><strong style="color: var(--slate-800);">Superficies</strong> &mdash; право владеть строением отдельно от земли. Критически важно для защиты инвестиций.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>07 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: ЧТО ДЕЛАТЬ -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Что делать</h2>
+    <span class="section-tag">Конкретные шаги</span>
+    <span class="slide-num">08 / 10</span>
+  </div>
+  <div class="slide-body" style="padding-top: 22px; padding-bottom: 16px;">
+    <div class="cols-2" style="gap: 24px;">
+      <div>
+        <div class="action-block">
+          <div class="action-title"><span class="num">1</span> Получите все пароли от госсервисов</div>
+          <div class="action-desc">DBD (регистрация компании), Labor Department, Revenue Department</div>
+        </div>
+        <div class="action-block warning-sub">
+          <div class="action-desc">&#9888; Через DBD можно за 5 минут сменить акционеров &mdash; если пароль у юриста, вы в зоне риска!</div>
+        </div>
+
+        <div class="action-block" style="margin-top: 4px;">
+          <div class="action-title"><span class="num">2</span> Платите Social Security сами</div>
+          <div class="action-desc">Один QR-код, один клик, Google Chrome переводит тайский сайт</div>
+        </div>
+
+        <div class="action-block">
+          <div class="action-title"><span class="num">3</span> Платите PND1 (налог) сами</div>
+          <div class="action-desc">Простая процедура с QR-кодом, не отдавайте юристу</div>
+        </div>
+
+        <div class="action-block">
+          <div class="action-title"><span class="num">4</span> Знайте свой налоговый номер</div>
+          <div class="action-desc">Базовая информация, которая должна быть у вас</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="action-block">
+          <div class="action-title"><span class="num">5</span> Контролируйте процессы</div>
+          <div class="action-desc">Даже если не делаете всё сами &mdash; следите за тем, что происходит в вашей компании</div>
+        </div>
+
+        <div class="action-block">
+          <div class="action-title"><span class="num">6</span> Выписывайте тайского директора</div>
+          <div class="action-desc">Получите пермит на себя &mdash; не зависьте от него, <strong class="red">особенно если он ваш юрист</strong></div>
+        </div>
+
+        <div class="action-block">
+          <div class="action-title"><span class="num">7</span> Дробите акционеров</div>
+          <div class="action-desc">Чтобы ни у кого не было права вето на действия директора</div>
+        </div>
+
+        <div class="box navy-fill" style="margin-top: 12px; padding: 14px 18px; margin-bottom: 0;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 22px;">&#127919;</span>
+            <div>
+              <strong style="color: var(--gold-light); font-size: 12px;">Цель:</strong>
+              <p style="color: rgba(255,255,255,0.75); font-size: 11.5px; margin-bottom: 0; margin-top: 2px;">Максимальный контроль над своей компанией. Юрист &mdash; помощник, а не владелец ваших процессов.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>08 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: МОЙ ИНСТАГРАМ -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Мой Инстаграм</h2>
+    <span class="slide-num">09 / 10</span>
+  </div>
+  <div class="slide-body" style="display: flex; align-items: center;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; width: 100%;">
+      <div>
+        <div class="section-label">Подписывайтесь</div>
+        <h3 style="font-size: 22px; margin-bottom: 16px;">Полезный контент о жизни и бизнесе на Самуи</h3>
+
+        <p style="font-size: 14px; line-height: 1.8; color: var(--slate-600); margin-bottom: 24px;">
+          Рассказываю о том, как <strong>избежать ошибок,</strong> сэкономить бюджет, купить шикарную виллу по спец&nbsp;предложению.
+        </p>
+
+        <div style="display: inline-block; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); color: var(--white); padding: 14px 36px; border-radius: 100px; box-shadow: 0 4px 20px rgba(201,162,39,0.3);">
+          <span style="font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; letter-spacing: 0.5px;">@SAMUIDAYS</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="background: var(--white); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-lg); border: 2px solid var(--slate-200); display: inline-block;">
+          <img src="images/pres-assets/p9-img3.jpeg" alt="QR-код Instagram @samuidays" style="width: 280px; height: auto; display: block; border-radius: var(--radius-xs);">
+          <div style="text-align: center; margin-top: 12px; font-size: 11px; color: var(--slate-400); font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Сканируйте QR-код</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>09 / 10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: ВОПРОС К ЗАЛУ -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="slide-header">
+    <h2>Вопрос к залу</h2>
+    <span class="slide-num">10 / 10</span>
+  </div>
+  <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center;">
+
+    <div class="gold-callout" style="margin-bottom: 20px;">
+      <div style="display: flex; gap: 18px; align-items: flex-start;">
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(201,162,39,0.3);">
+          <span style="font-size: 22px; color: var(--white);">&#127968;</span>
+        </div>
+        <div>
+          <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--navy);">Есть тут риэлторы?</h3>
+          <p style="font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 0;">
+            Приглашаю риэлторов отдельно ко мне подойти и я расскажу вам, <strong style="color: var(--gold-dark);">почему вам со мной получится заработать больше.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-callout" style="margin-bottom: 24px;">
+      <div style="display: flex; gap: 18px; align-items: flex-start;">
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(201,162,39,0.3);">
+          <span style="font-size: 22px; color: var(--white);">&#127891;</span>
+        </div>
+        <div>
+          <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--navy);">Семьи с детьми?</h3>
+          <p style="font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 0;">
+            Есть ли среди слушателей семьи с детьми, заинтересованные в обучении детей в международной школе по <strong style="color: var(--gold-dark);">выгодным, чем в Винфилде, Лисе и Панади условиям?</strong> Тоже подойдите ко мне, всё расскажу.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" style="margin: 4px 0 16px;"></div>
+
+    <div style="text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--navy), var(--navy-mid)); color: var(--white); padding: 14px 36px; border-radius: 100px; box-shadow: 0 4px 20px rgba(12,22,41,0.25);">
+        <span style="font-size: 18px;">&#129309;</span>
+        <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.3px;">Подходите &mdash; пообщаемся!</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-footer">
+    <span class="logo-text">BKS &mdash; Бизнес-Клуб Самуи</span>
+    <span>10 / 10</span>
+  </div>
+</div>
+
+</body>
+</html>

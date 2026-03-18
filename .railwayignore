@@ -1,0 +1,14 @@
+node_modules/
+images/
+css/
+js/
+log/
+temp_files/
+data/
+*.html
+*.md
+*.pdf
+*.xml
+CNAME
+package.json
+package-lock.json

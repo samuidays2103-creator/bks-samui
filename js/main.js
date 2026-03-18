@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLangSwitch();
   initScrollAnimations();
   initLightbox();
+  initCounterAnimation();
 });
 
 /* --- Sticky Header --- */
@@ -138,4 +139,43 @@ function initScrollAnimations() {
   });
 
   elements.forEach(el => observer.observe(el));
+}
+
+/* --- Counter Animation --- */
+function initCounterAnimation() {
+  const stats = document.querySelectorAll('.stat__number');
+  if (!stats.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  stats.forEach(el => observer.observe(el));
+}
+
+function animateCounter(el) {
+  const text = el.textContent.trim();
+  const match = text.match(/^(\d+)(\+?)$/);
+  if (!match) return;
+
+  const target = parseInt(match[1]);
+  const suffix = match[2];
+  const duration = 1500;
+  const start = performance.now();
+
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * eased);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+
+  el.textContent = '0' + suffix;
+  requestAnimationFrame(update);
 }
