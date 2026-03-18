@@ -377,6 +377,16 @@ h4 { font-size: 1.125rem; }
   min-height: 40vh;
 }
 
+.hero--home {
+  background-image: url('../images/hero-home.webp');
+}
+@media (max-width: 768px) {
+  .hero--home { background-image: url('../images/hero-home-768w.webp'); }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .hero--home { background-image: url('../images/hero-home-1200w.webp'); }
+}
+
 .hero__overlay {
   position: absolute;
   inset: 0;

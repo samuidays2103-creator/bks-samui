@@ -14,9 +14,12 @@
   <link rel="canonical" href="https://samuibiz.club/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" type="image/webp" href="images/hero-home-768w.webp" media="(max-width: 768px)">
+  <link rel="preload" as="image" type="image/webp" href="images/hero-home-1200w.webp" media="(min-width: 769px)">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,7 +75,7 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero" style="background-image: url('images/hero-home.jpg'); background-color: var(--color-bg-dark);">
+  <section class="hero hero--home" style="background-color: var(--color-bg-dark);">
     <div class="hero__overlay"></div>
     <div class="container hero__content">
       <span class="hero__badge" data-en="Koh Samui, Thailand" data-ru="Ко Самуи, Таиланд">Ко Самуи, Таиланд</span>
