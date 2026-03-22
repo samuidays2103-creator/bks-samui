@@ -22,6 +22,7 @@ from telegram.ext import (
     ChatJoinRequestHandler,
     ChatMemberHandler,
     CommandHandler,
+    ConversationHandler,
     ContextTypes,
     MessageHandler,
     filters,
@@ -57,6 +58,23 @@ DONATION_CHAT = os.getenv("DONATION_CHAT", "@samuibiz")
 
 # Путь к QR-коду для donation
 QR_DONATION_PATH = Path(__file__).parent / "qr_donation.jpg"
+
+# Путь к фото Натали для четвергового поста
+NATALI_SPEAKER_PATH = Path(__file__).parent / "natali_speaker.jpg"
+
+# Путь к картинке еженедельной встречи
+WEEKLY_MEETING_PATH = Path(__file__).parent / "weekly_meeting.jpg"
+
+# Дата первой встречи 2026 года (7 января — первая среда)
+MEETING_START_DATE = datetime(2026, 1, 7, tzinfo=ZoneInfo("Asia/Bangkok"))
+
+# Путь к картинке прогулки
+WALK_PATH = Path(__file__).parent / "walk.jpg"
+
+# Дата первой Вечерней Бизнес-прогулки (23 декабря 2025 = XIII была 17 марта 2026)
+WALK_START_DATE = datetime(2025, 12, 23, tzinfo=ZoneInfo("Asia/Bangkok"))
+
+WALK_LOCATION = "https://maps.app.goo.gl/oi7jDoRx2xNuMusW8?g_st=ac"
 
 BANGKOK_TZ = ZoneInfo("Asia/Bangkok")
 
@@ -649,16 +667,26 @@ def format_report(user: User, result: dict) -> str:
 
 
 async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Ответ на /start."""
+    """Ответ на /start. Если ?start=join — запускаем анкету вступления."""
+    args = context.args
+    if args and args[0] == "join":
+        await update.message.reply_text(
+            "👋 Привет! Рады видеть тебя в Бизнес-Клубе Самуи.\n\n"
+            "Чтобы вступить, ответь на 3 коротких вопроса.\n\n"
+            "<b>Вопрос 1/3:</b> Как тебя зовут и чем ты занимаешься?",
+            parse_mode="HTML",
+        )
+        return JOIN_NAME
     await update.message.reply_text(
         "Привет! Я модератор заявок для чата BKS Samui.\n\n"
         "Команды:\n"
         "/check — проверить себя\n"
         "/check <user_id> — проверить по ID\n"
-        "/scan — сканировать админов группы\n"
+        "/scan — сканировать группу\n"
         "/status — настройки бота\n\n"
         "Или просто перешли мне сообщение — проверю отправителя."
     )
+    return ConversationHandler.END
 
 
 async def cmd_check(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1298,7 +1326,49 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-    data = query.data  # "approve_USERID_CHATID" или "decline_USERID_CHATID"
+    data = query.data
+
+    # Обрабатываем кнопки анкеты вступления отдельно
+    if data.startswith("join_approve_") or data.startswith("join_decline_"):
+        applicant_id = int(data.split("_")[2])
+        if data.startswith("join_approve_"):
+            try:
+                invite = await context.bot.create_chat_invite_link(
+                    chat_id="@samuibiz",
+                    member_limit=1,
+                    name=f"join_{applicant_id}",
+                )
+                await context.bot.send_message(
+                    chat_id=applicant_id,
+                    text=(
+                        "🎉 Твоя заявка одобрена!\n\n"
+                        f"Вот твоя персональная ссылка для вступления:\n{invite.invite_link}\n\n"
+                        "Ссылка одноразовая — не передавай её другим."
+                    ),
+                )
+                await query.edit_message_text(query.message.text + "\n\n✅ ОДОБРЕНО — ссылка отправлена")
+                logger.info("JOIN: одобрен user_id=%d", applicant_id)
+            except Exception as e:
+                await query.edit_message_text(query.message.text + f"\n\n❌ Ошибка: {e}")
+                logger.error("JOIN: ошибка одобрения %d: %s", applicant_id, e)
+        else:
+            try:
+                await context.bot.send_message(
+                    chat_id=applicant_id,
+                    text=(
+                        "К сожалению, твоя заявка не была одобрена.\n"
+                        "Если есть вопросы — напиши @Natali_na_Samui."
+                    ),
+                )
+                await query.edit_message_text(query.message.text + "\n\n❌ ОТКЛОНЕНО")
+                logger.info("JOIN: отклонён user_id=%d", applicant_id)
+            except Exception as e:
+                await query.edit_message_text(query.message.text + f"\n\n❌ Ошибка: {e}")
+        _join_pending.pop(applicant_id, None)
+        return
+
+    # Остальные кнопки: approve/decline/ban/skip
+    # "approve_USERID_CHATID" или "decline_USERID_CHATID"
     parts = data.split("_", 2)
     if len(parts) < 3:
         return
@@ -1439,6 +1509,335 @@ async def send_donation_reminder(context: ContextTypes.DEFAULT_TYPE):
         logger.error("DONATION: ошибка отправки в %s: %s", chat, e)
 
 
+# ── Еженедельный анонс встречи (вторник 15:00) ───────────────
+
+WEEKLY_MEETING_LOCATION = "https://maps.app.goo.gl/YxfihWLdaXxWZBtC9"
+
+_ORDINALS_RU = {
+    1: "1-я", 2: "2-я", 3: "3-я", 4: "4-я", 5: "5-я",
+    6: "6-я", 7: "7-я", 8: "8-я", 9: "9-я", 10: "10-я",
+    11: "11-я", 12: "12-я", 13: "13-я", 14: "14-я", 15: "15-я",
+    16: "16-я", 17: "17-я", 18: "18-я", 19: "19-я", 20: "20-я",
+    21: "21-я", 22: "22-я", 23: "23-я", 24: "24-я", 25: "25-я",
+    26: "26-я", 27: "27-я", 28: "28-я", 29: "29-я", 30: "30-я",
+    31: "31-я", 32: "32-я", 33: "33-я", 34: "34-я", 35: "35-я",
+    36: "36-я", 37: "37-я", 38: "38-я", 39: "39-я", 40: "40-я",
+    41: "41-я", 42: "42-я", 43: "43-я", 44: "44-я", 45: "45-я",
+    46: "46-я", 47: "47-я", 48: "48-я", 49: "49-я", 50: "50-я",
+    51: "51-я", 52: "52-я", 53: "53-я",
+}
+
+_MONTHS_RU = [
+    "", "января", "февраля", "марта", "апреля", "мая", "июня",
+    "июля", "августа", "сентября", "октября", "ноября", "декабря"
+]
+
+
+def _get_meeting_number(wednesday: datetime) -> str:
+    """Порядковый номер встречи в году (считаем среды с MEETING_START_DATE)."""
+    delta = (wednesday.date() - MEETING_START_DATE.date()).days
+    n = delta // 7 + 1
+    return _ORDINALS_RU.get(n, f"{n}-я")
+
+
+def _build_weekly_meeting_text(now: datetime) -> str:
+    """Строим текст анонса для следующей среды."""
+    from datetime import timedelta
+    # Находим ближайшую среду (weekday=2)
+    days_ahead = (2 - now.weekday()) % 7
+    if days_ahead == 0:
+        days_ahead = 7  # если сегодня среда — берём следующую
+    wednesday = now + timedelta(days=days_ahead)
+    meeting_num = _get_meeting_number(wednesday)
+    day = wednesday.day
+    month = _MONTHS_RU[wednesday.month]
+    text = (
+        f"💼 <b>Бизнес-клуб Самуи | {meeting_num} встреча года</b>\n\n"
+        f"📅 {day} {month} (среда), 10:00\n"
+        f"📍 Кафе «Планктон»\n\n"
+        f"☕ Формат: Бизнес-завтрак, нетворкинг, свободное общение.\n"
+        f"Рассказать о себе и своём проекте.\n"
+        f"Вход свободный.\n\n"
+        f"📍 Локация: {WEEKLY_MEETING_LOCATION}"
+    )
+    return text
+
+
+_weekly_meeting_sent_today = False
+
+
+async def weekly_meeting_checker(context: ContextTypes.DEFAULT_TYPE):
+    """Проверяем каждую минуту: вторник + 15:00 Bangkok → отправляем."""
+    global _weekly_meeting_sent_today
+    now = datetime.now(BANGKOK_TZ)
+
+    if now.hour == 0 and now.minute == 0:
+        _weekly_meeting_sent_today = False
+        return
+
+    # Вторник (weekday=1) в 15:00
+    if now.weekday() == 1 and now.hour == 15 and now.minute == 0 and not _weekly_meeting_sent_today:
+        _weekly_meeting_sent_today = True
+        await send_weekly_meeting(context)
+
+
+async def send_weekly_meeting(context: ContextTypes.DEFAULT_TYPE):
+    """Отправляем еженедельный анонс встречи."""
+    now = datetime.now(BANGKOK_TZ)
+    text = _build_weekly_meeting_text(now)
+    logger.info("WEEKLY_MEETING: отправка в %s", DONATION_CHAT)
+    try:
+        chat_target = int(DONATION_CHAT) if DONATION_CHAT.lstrip("-").isdigit() else DONATION_CHAT
+    except ValueError:
+        chat_target = DONATION_CHAT
+
+    try:
+        if WEEKLY_MEETING_PATH.exists():
+            with open(WEEKLY_MEETING_PATH, "rb") as photo:
+                await context.bot.send_photo(
+                    chat_id=chat_target,
+                    photo=photo,
+                    caption=text,
+                    parse_mode="HTML",
+                )
+        else:
+            await context.bot.send_message(
+                chat_id=chat_target,
+                text=text,
+                parse_mode="HTML",
+            )
+            logger.warning("WEEKLY_MEETING: картинка не найдена: %s", WEEKLY_MEETING_PATH)
+        logger.info("WEEKLY_MEETING: анонс отправлен в %s", DONATION_CHAT)
+    except Exception as e:
+        logger.error("WEEKLY_MEETING: ошибка: %s", e)
+
+
+async def cmd_testmeeting(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """/testmeeting — отправить анонс встречи прямо сейчас (тест)."""
+    await send_weekly_meeting(context)
+    await update.message.reply_text("✅ Анонс встречи отправлен в " + DONATION_CHAT)
+
+
+# ── Еженедельная Вечерняя Бизнес-прогулка (понедельник 15:00) ─
+
+def _to_roman(n: int) -> str:
+    vals = [(1000,"M"),(900,"CM"),(500,"D"),(400,"CD"),(100,"C"),(90,"XC"),
+            (50,"L"),(40,"XL"),(10,"X"),(9,"IX"),(5,"V"),(4,"IV"),(1,"I")]
+    result = ""
+    for v, s in vals:
+        while n >= v:
+            result += s
+            n -= v
+    return result
+
+
+def _build_walk_text(now: datetime) -> str:
+    from datetime import timedelta
+    # Ближайший вторник
+    days_ahead = (1 - now.weekday()) % 7
+    if days_ahead == 0:
+        days_ahead = 7
+    tuesday = now + timedelta(days=days_ahead)
+    # Номер прогулки
+    delta = (tuesday.date() - WALK_START_DATE.date()).days
+    n = delta // 7 + 1
+    roman = _to_roman(n)
+    day = tuesday.day
+    month = _MONTHS_RU[tuesday.month]
+    year = tuesday.year
+    return (
+        f"💼 Бизнес-клуб Самуи | {roman} Вечерняя Бизнес-прогулка\n\n"
+        f"📅 Вторник, {day} {month} {year}\n"
+        f"🕙 Начало в 22:00 | Длительность до 2 часов\n"
+        f"📍 Место старта на озере у баскетбольной площадки ({WALK_LOCATION})\n\n"
+        f"⚡ Не попадаешь на утренние встречи из-за другой таймзоны\n"
+        f"Просто чувствуешь, что лучше думаешь на ходу —\n"
+        f"приходи на бизнес-прогулку.\n"
+        f"Идём, разговариваем, думаем! ;)"
+    )
+
+
+_walk_sent_today = False
+
+
+async def walk_checker(context: ContextTypes.DEFAULT_TYPE):
+    """Проверяем каждую минуту: понедельник + 15:00 Bangkok → отправляем."""
+    global _walk_sent_today
+    now = datetime.now(BANGKOK_TZ)
+
+    if now.hour == 0 and now.minute == 0:
+        _walk_sent_today = False
+        return
+
+    # Понедельник (weekday=0) в 15:00
+    if now.weekday() == 0 and now.hour == 15 and now.minute == 0 and not _walk_sent_today:
+        _walk_sent_today = True
+        await send_walk_reminder(context)
+
+
+async def send_walk_reminder(context: ContextTypes.DEFAULT_TYPE):
+    """Отправляем анонс Вечерней Бизнес-прогулки."""
+    now = datetime.now(BANGKOK_TZ)
+    text = _build_walk_text(now)
+    logger.info("WALK: отправка в %s", DONATION_CHAT)
+    try:
+        chat_target = int(DONATION_CHAT) if DONATION_CHAT.lstrip("-").isdigit() else DONATION_CHAT
+    except ValueError:
+        chat_target = DONATION_CHAT
+
+    try:
+        if WALK_PATH.exists():
+            with open(WALK_PATH, "rb") as photo:
+                await context.bot.send_photo(
+                    chat_id=chat_target,
+                    photo=photo,
+                    caption=text,
+                )
+        else:
+            await context.bot.send_message(chat_id=chat_target, text=text)
+            logger.warning("WALK: картинка не найдена: %s", WALK_PATH)
+        logger.info("WALK: анонс отправлен в %s", DONATION_CHAT)
+    except Exception as e:
+        logger.error("WALK: ошибка: %s", e)
+
+
+async def cmd_testwalk(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """/testwalk — отправить анонс прогулки прямо сейчас (тест)."""
+    await send_walk_reminder(context)
+    await update.message.reply_text("✅ Анонс прогулки отправлен в " + DONATION_CHAT)
+
+
+# ── Еженедельный спикерский пост (четверг 11:30) ─────────────
+
+SPEAKER_TEXT = (
+    "👋 <b>Если ты новенький</b> — представься и расскажи о себе!\n\n"
+    "🎤 <b>Если ты хочешь провести полезную встречу или стать спикером</b> — "
+    "напиши Натали: @Natali_na_Samui"
+)
+
+_speaker_sent_today = False
+
+
+async def speaker_checker(context: ContextTypes.DEFAULT_TYPE):
+    """Проверяем каждую минуту: четверг + 11:30 Bangkok → отправляем."""
+    global _speaker_sent_today
+    now = datetime.now(BANGKOK_TZ)
+
+    if now.hour == 0 and now.minute == 0:
+        _speaker_sent_today = False
+        return
+
+    # Четверг (weekday=3) в 11:30
+    if now.weekday() == 3 and now.hour == 11 and now.minute == 30 and not _speaker_sent_today:
+        _speaker_sent_today = True
+        await send_speaker_reminder(context)
+
+
+async def send_speaker_reminder(context: ContextTypes.DEFAULT_TYPE):
+    """Еженедельная отправка спикерского поста в чат клуба."""
+    logger.info("SPEAKER: запуск отправки в %s", DONATION_CHAT)
+    try:
+        chat_target = int(DONATION_CHAT) if DONATION_CHAT.lstrip("-").isdigit() else DONATION_CHAT
+    except ValueError:
+        chat_target = DONATION_CHAT
+
+    try:
+        if NATALI_SPEAKER_PATH.exists():
+            with open(NATALI_SPEAKER_PATH, "rb") as photo:
+                await context.bot.send_photo(
+                    chat_id=chat_target,
+                    photo=photo,
+                    caption=SPEAKER_TEXT,
+                    parse_mode="HTML",
+                )
+        else:
+            await context.bot.send_message(
+                chat_id=chat_target,
+                text=SPEAKER_TEXT,
+                parse_mode="HTML",
+            )
+            logger.warning("SPEAKER: фото не найдено: %s", NATALI_SPEAKER_PATH)
+        logger.info("SPEAKER: пост отправлен в %s", DONATION_CHAT)
+    except Exception as e:
+        logger.error("SPEAKER: ошибка отправки в %s: %s", DONATION_CHAT, e)
+
+
+async def cmd_testspeaker(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """/testspeaker — отправить спикерский пост прямо сейчас (тест)."""
+    await send_speaker_reminder(context)
+    await update.message.reply_text("✅ Speaker-пост отправлен в " + DONATION_CHAT)
+
+
+# ── Анкета вступления (deep link ?start=join) ─────────────────
+
+JOIN_NAME, JOIN_WHY, JOIN_SAMUI = range(3)
+
+# user_id → {name, why, samui, tg_user}
+_join_pending: dict[int, dict] = {}
+
+
+async def join_got_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    _join_pending[user.id] = {"name": update.message.text, "tg_user": user}
+    await update.message.reply_text(
+        "<b>Вопрос 2/3:</b> Почему хочешь вступить в клуб? Что рассчитываешь получить?",
+        parse_mode="HTML",
+    )
+    return JOIN_WHY
+
+
+async def join_got_why(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    _join_pending.setdefault(user.id, {})["why"] = update.message.text
+    await update.message.reply_text(
+        "<b>Вопрос 3/3:</b> Ты сейчас на Самуи?",
+        parse_mode="HTML",
+    )
+    return JOIN_SAMUI
+
+
+async def join_got_samui(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    data = _join_pending.get(user.id, {})
+    data["samui"] = update.message.text
+    data["tg_user"] = user
+
+    tg_link = f"@{user.username}" if user.username else f"tg://user?id={user.id}"
+    text = (
+        f"📋 <b>Новая заявка на вступление</b>\n\n"
+        f"👤 {user.full_name} ({tg_link})\n"
+        f"ID: <code>{user.id}</code>\n\n"
+        f"1️⃣ <b>Кто:</b> {data.get('name', '—')}\n"
+        f"2️⃣ <b>Зачем:</b> {data.get('why', '—')}\n"
+        f"3️⃣ <b>На Самуи:</b> {data.get('samui', '—')}"
+    )
+    keyboard = InlineKeyboardMarkup([[
+        InlineKeyboardButton("✅ Одобрить", callback_data=f"join_approve_{user.id}"),
+        InlineKeyboardButton("❌ Отклонить", callback_data=f"join_decline_{user.id}"),
+    ]])
+
+    try:
+        await context.bot.send_message(
+            chat_id=int(ADMIN_CHAT_ID),
+            text=text,
+            parse_mode="HTML",
+            reply_markup=keyboard,
+        )
+    except Exception as e:
+        logger.error("JOIN: не удалось отправить анкету админу: %s", e)
+
+    await update.message.reply_text(
+        "✅ Спасибо! Твоя заявка отправлена.\n"
+        "Мы рассмотрим её и пришлём ссылку для вступления."
+    )
+    return ConversationHandler.END
+
+
+async def join_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Заявка отменена. Напиши /start join чтобы начать заново.")
+    return ConversationHandler.END
+
+
 # ── Запуск ────────────────────────────────────────────────────
 
 def main():
@@ -1450,7 +1849,19 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     # Команды и пересылка — только в личке с ботом
     pm = filters.ChatType.PRIVATE
-    app.add_handler(CommandHandler("start", cmd_start, filters=pm))
+
+    # Анкета вступления через deep link ?start=join
+    join_conv = ConversationHandler(
+        entry_points=[CommandHandler("start", cmd_start, filters=pm)],
+        states={
+            JOIN_NAME:  [MessageHandler(pm & filters.TEXT & ~filters.COMMAND, join_got_name)],
+            JOIN_WHY:   [MessageHandler(pm & filters.TEXT & ~filters.COMMAND, join_got_why)],
+            JOIN_SAMUI: [MessageHandler(pm & filters.TEXT & ~filters.COMMAND, join_got_samui)],
+        },
+        fallbacks=[CommandHandler("cancel", join_cancel, filters=pm)],
+        allow_reentry=True,
+    )
+    app.add_handler(join_conv)
     app.add_handler(CommandHandler("check", cmd_check, filters=pm))
     app.add_handler(CommandHandler("scan", cmd_scan, filters=pm))
     app.add_handler(CommandHandler("purge", cmd_purge, filters=pm))
@@ -1459,6 +1870,9 @@ def main():
     app.add_handler(CommandHandler("status", cmd_status, filters=pm))
     app.add_handler(CommandHandler("jobs", cmd_jobs, filters=pm))
     app.add_handler(CommandHandler("testdonation", cmd_testdonation, filters=pm))
+    app.add_handler(CommandHandler("testspeaker", cmd_testspeaker, filters=pm))
+    app.add_handler(CommandHandler("testmeeting", cmd_testmeeting, filters=pm))
+    app.add_handler(CommandHandler("testwalk", cmd_testwalk, filters=pm))
     app.add_handler(ChatMemberHandler(
         handle_chat_member_update, ChatMemberHandler.CHAT_MEMBER,
     ))
@@ -1481,7 +1895,28 @@ def main():
             first=5,      # через 5 секунд после старта
             name="donation_checker",
         )
+        job_queue.run_repeating(
+            speaker_checker,
+            interval=60,
+            first=10,
+            name="speaker_checker",
+        )
+        job_queue.run_repeating(
+            weekly_meeting_checker,
+            interval=60,
+            first=15,
+            name="weekly_meeting_checker",
+        )
         logger.info("DONATION: checker запущен (каждую минуту, ср 11:30 Bangkok)")
+        logger.info("SPEAKER: checker запущен (каждую минуту, чт 11:30 Bangkok)")
+        job_queue.run_repeating(
+            walk_checker,
+            interval=60,
+            first=20,
+            name="walk_checker",
+        )
+        logger.info("WEEKLY_MEETING: checker запущен (каждую минуту, вт 15:00 Bangkok)")
+        logger.info("WALK: checker запущен (каждую минуту, пн 15:00 Bangkok)")
     else:
         logger.warning("DONATION: JobQueue недоступен — установите python-telegram-bot[job-queue]")
 
