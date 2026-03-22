@@ -673,7 +673,7 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             "👋 Привет! Рады видеть тебя в Бизнес-Клубе Самуи.\n\n"
             "Чтобы вступить, ответь на 3 коротких вопроса.\n\n"
-            "<b>Вопрос 1/3:</b> Как тебя зовут и чем ты занимаешься?",
+            "<b>Вопрос 1/3:</b> Как зовут и чем занимаешься?",
             parse_mode="HTML",
         )
         return JOIN_NAME
