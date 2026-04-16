@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Directory Koh Samui — Find Trusted Businesses | Business Club Samui</title>
+  <meta name="description" content="Find trusted businesses on Koh Samui. Directory of verified businesses: real estate, restaurants, services, entertainment. By Business Club Samui.">
+  <meta property="og:title" content="Business Directory Koh Samui — Business Club Samui">
+  <meta property="og:description" content="Find trusted businesses on Koh Samui. Directory of verified club members.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://samuibiz.club/images/hero-directory.jpg">
+  <meta property="og:url" content="https://samuibiz.club/en/directory.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="canonical" href="https://samuibiz.club/en/directory.html">
+  <link rel="alternate" hreflang="ru" href="https://samuibiz.club/directory.html">
+  <link rel="alternate" hreflang="en" href="https://samuibiz.club/en/directory.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="../images/logo-bks.jpg">
+  <link rel="stylesheet" href="../css/style.min.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "BCS Business Directory",
+    "description": "Directory of verified businesses on Koh Samui",
+    "url": "https://samuibiz.club/en/directory.html"
+  }
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Business Directory — BCS">
+  <meta name="twitter:description" content="Directory of verified businesses on Koh Samui.">
+  <meta name="twitter:image" content="https://samuibiz.club/images/hero-directory.jpg">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "BCS",
+      "item": "https://samuibiz.club/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Directory",
+      "item": "https://samuibiz.club/en/directory.html"
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <img class="logo-mark" src="../images/logo-bks.jpg" alt="BCS" width="44" height="44">
+        <span class="logo-text">Business Club Samui</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="index.html" class="nav__link">Home</a>
+        <a href="directory.html" class="nav__link nav__link--active">Directory</a>
+        <a href="events.html" class="nav__link">Events</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="investments.html" class="nav__link">Investments</a>
+        <a href="contacts.html" class="nav__link">Contacts</a>
+        <div class="lang-switch">
+          <a href="../directory.html" class="lang-btn">RU</a>
+          <span class="lang-btn lang-btn--active">EN</span>
+        </div>
+      </nav>
+      <button class="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero hero--short" style="background-image: url('../images/bks-event/ELLE1919_resized.jpg'); background-color: var(--color-bg-dark); background-position: center center;">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">Business Directory Koh Samui</h1>
+      <p class="hero__subtitle">Find trusted businesses on Koh Samui</p>
+    </div>
+  </section>
+
+  <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><a href="index.html">Home</a> <span class="breadcrumb__sep">/</span> <span>Directory</span></div></nav>
+    <section class="section">
+      <div class="container">
+        <!-- Filter Bar -->
+        <div class="filter-bar fade-in">
+          <button class="filter-btn filter-btn--active" data-category="all">All</button>
+          <button class="filter-btn" data-category="realestate">Real Estate</button>
+          <button class="filter-btn" data-category="food">Restaurants</button>
+          <button class="filter-btn" data-category="beauty">Beauty</button>
+          <button class="filter-btn" data-category="fitness">Fitness</button>
+          <button class="filter-btn" data-category="hotels">Hotels</button>
+          <button class="filter-btn" data-category="photo">Photo</button>
+          <button class="filter-btn" data-category="education">Education</button>
+          <button class="filter-btn" data-category="legal">Legal</button>
+          <button class="filter-btn" data-category="transport">Transport</button>
+          <button class="filter-btn" data-category="events">Events</button>
+          <button class="filter-btn" data-category="entertainment">Entertainment</button>
+          <button class="filter-btn" data-category="medical">Medical</button>
+          <button class="filter-btn" data-category="services">Other</button>
+        </div>
+
+        <!-- Business Cards Grid -->
+        <div class="cards-grid" id="directory-grid">
+          <!-- Rendered by directory.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+          <div class="empty-state__icon">🔍</div>
+          <p class="empty-state__text">No businesses found in this category yet</p>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align: center; margin-top: 56px;" class="fade-in">
+          <p style="color: var(--color-text-light); margin-bottom: 16px;">Want to add your business to the directory?</p>
+          <a href="https://t.me/Natali_na_Samui" target="_blank" class="btn btn--telegram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+            <span>Write to Natali in Telegram</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <h4 class="footer__heading">BCS</h4>
+          <p style="font-size: 0.88rem; line-height: 1.6;">Business Club Samui — community of Russian-speaking entrepreneurs on Koh Samui, Thailand.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Pages</h4>
+          <div class="footer__links">
+            <a href="directory.html" class="footer__link">Business Directory</a>
+            <a href="events.html" class="footer__link">Events</a>
+            <a href="about.html" class="footer__link">About the Club</a>
+            <a href="investments.html" class="footer__link">Investments</a>
+            <a href="contacts.html" class="footer__link">Contacts</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Regular Meetings</h4>
+          <div class="footer__links">
+            <span class="footer__link">Business Wednesday — Wed, 10:00</span>
+            <span class="footer__link">Evening Walk — Tue, 22:00</span>
+            <span class="footer__link">Jungle Hikes — Sun</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Connect</h4>
+          <div class="footer__social">
+            <a href="https://t.me/BCSSamuibot?start=join" target="_blank" class="footer__social-link" aria-label="Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2026 BCS — Business Club Samui</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.min.js"></script>
+  <script src="../js/directory.min.js"></script>
+</body>
+</html>
